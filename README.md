@@ -8,18 +8,20 @@ It is structured as mountable rails engine.
 
 ## Installation
 
-Make sure that you have [cloudinary gem](https://github.com/cloudinary/cloudinary_gem) installed and properly configured. Then, run following rake command in terminal:
+Add following line to your `Gemfile`:
+
+    gem 'attachinary'
+
+Then, run following rake command in terminal to create necessary tables:
 
 	rake attachinary:install:migrations
 	rake db:migrate
 
-It will create two tables. One for storing files and other for association with your models.
-
-Add following line in your `routes.rb` file to mount the gem:
+Add following line in your `routes.rb` file to mount the engine:
 
 	mount Attachinary::Engine => "/attachinary"
-
-That's it.
+	
+That's it. Oh, and make sure that you have [cloudinary gem](https://github.com/cloudinary/cloudinary_gem) installed and properly configured.
 
 
 ## Usage
