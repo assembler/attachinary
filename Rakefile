@@ -37,9 +37,7 @@ Bundler::GemHelper.install_tasks
 # end
 
 require 'rspec/core/rake_task'
-
+RSpec::Core::RakeTask.new(:spec)
 task :default => :spec
 
-RSpec::Core::RakeTask.new do |t|
-  t.ruby_opts = ["-w"]
-end
+
