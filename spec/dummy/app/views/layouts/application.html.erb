@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dummy</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= cloudinary_js_config %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<%= yield %>
+
+</body>
+</html>

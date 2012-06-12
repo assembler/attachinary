@@ -1,0 +1,20 @@
+<%= form_for note do |f| %>
+
+  <%= f.label 'Body' %>
+  <br />
+
+  <%= f.text_field :body %>
+  <%= note.errors[:body].first %>
+  <br />
+
+  <%= attachinary_file_field_tag 'note[photo_id]', note.photo_id, attachinary: note.photo_options %>
+  <%= note.errors[:photo_id].first %>
+  <br />
+
+  <%= attachinary_file_field_tag 'note[image_ids]', note.image_ids, attachinary: note.image_options %>
+  <%= note.errors[:image_ids].first %>
+  <br />
+  <br />
+
+  <%= f.submit  %>
+<% end %>

@@ -1,0 +1,7 @@
+<div style="float:left; width: 100px;">
+  <% if note.photo? %>
+    <%= cl_image_tag note.photo.path,
+      size: '90x90', crop: :fill, html_width: nil, html_height: nil %>
+  <% end %>
+  <%= note.body %>
+</div>

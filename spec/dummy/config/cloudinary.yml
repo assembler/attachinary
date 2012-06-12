@@ -1,0 +1,21 @@
+default: &default
+  enhance_image_tag: true
+  static_image_support: true
+  cdn_subdomain: true
+  secure_distribution: false
+  private_cdn: false
+
+development:
+  <<: *default
+  cloud_name: zogash
+  api_key: '239686383923234'
+  api_secret: Oy0Y9QbFtNQncsokHjoZUDYXOCI
+
+test:
+  <<: *default
+  cloud_name: zogash
+  api_key: '239686383923234'
+  api_secret: Oy0Y9QbFtNQncsokHjoZUDYXOCI
+
+staging:
+  <<: *default

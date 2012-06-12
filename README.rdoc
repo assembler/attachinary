@@ -1,0 +1,8 @@
+= Attachinary
+
+
+
+== TODO:
+
+* write specs
+* Testing generators (https://github.com/stevehodgkiss/generator_spec)
