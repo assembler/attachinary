@@ -5,6 +5,8 @@ module Attachinary
 
     def attachinary_file_field_tag(name, value, options={})
       options[:cloudinary] ||= {}
+      options[:cloudinary][:tags] ||= []
+      options[:cloudinary][:tags]<< "#{Rails.env}_env"
 
       cloudinary_upload_url = Cloudinary::Utils.cloudinary_api_url("upload",
         {:resource_type=>:auto}.merge(options[:cloudinary]))
@@ -13,7 +15,7 @@ module Attachinary
       api_secret = options[:cloudinary][:api_secret] || Cloudinary.config.api_secret || raise("Must supply api_secret")
 
       cloudinary_params = Cloudinary::Uploader.build_upload_params(options[:cloudinary])
-      cloudinary_params[:callback] = attachinary_engine.cors_url
+      cloudinary_params[:callback] = attachinary.cors_url
       cloudinary_params[:signature] = Cloudinary::Utils.api_sign_request(cloudinary_params, api_secret)
       cloudinary_params[:api_key] = api_key
 
@@ -31,7 +33,7 @@ module Attachinary
 
       options[:html][:data] ||= {}
       options[:html][:data][:attachinary] = options.delete(:attachinary) || {}
-      options[:html][:data][:attachinary][:callback] = attachinary_engine.callback_path
+      options[:html][:data][:attachinary][:callback] = attachinary.callback_path
       options[:html][:data][:attachinary][:files] = Attachinary::File.where(id: value).all
       options[:html][:data][:attachinary][:field_name] = name
 

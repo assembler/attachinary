@@ -1,4 +1,10 @@
 <h1>Notes</h1>
-<%= render @notes %>
 
-<%= link_to 'create new note', new_note_path %>
+<div style="overflow:auto">
+  <%= render @notes %>
+</div>
+
+<br />
+<br />
+<%= link_to 'create new note', new_note_path(kind: 'raw') %><br />
+<%= link_to 'create new note using simple form', new_note_path(kind: 'simple_form') %><br />

@@ -1,0 +1,26 @@
+<%= form_for note, url: notes_path(kind: params[:kind]) do |f| %>
+
+  <%= f.label 'Body' %>
+  <br />
+
+  <%= f.text_field :body %>
+  <div><%= note.errors[:body].first %></div>
+  <br />
+
+  <div class="photo">
+    <%= attachinary_file_field_tag 'note[photo_id]', note.photo_id, attachinary: note.photo_options %>
+    <div><%= note.errors[:photo_id].first %></div>
+  </div>
+
+  <br />
+
+  <div class="images">
+    <%= attachinary_file_field_tag 'note[image_ids]', note.image_ids, attachinary: note.image_options %>
+    <div><%= note.errors[:image_ids].first %></div>
+  </div>
+
+  <br />
+  <br />
+
+  <%= f.submit  %>
+<% end %>

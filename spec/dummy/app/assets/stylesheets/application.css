@@ -19,7 +19,3 @@ form.uploading {
 input.uploading {
   background-color: #999;
 }
-
-.field_with_errors {
-  display: inline;
-}

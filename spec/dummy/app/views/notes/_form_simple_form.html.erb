@@ -1,0 +1,15 @@
+<%= simple_form_for note, url: notes_path(kind: params[:kind]), html: { novalidate: true } do |f| %>
+
+  <%= f.input :body, as: :string %>
+
+  <div class="photo">
+    <%= f.input :photo, as: :attachinary %>
+  </div>
+
+  <div class="images">
+    <%= f.input :images, as: :attachinary %>
+  </div>
+
+  <%= f.submit %>
+
+<% end %>

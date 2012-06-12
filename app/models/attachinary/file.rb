@@ -10,9 +10,11 @@ module Attachinary
       super(only: [:id, :public_id, :format, :version, :resource_type], methods: [:path])
     end
 
-    def path
+    def path(custom_format=nil)
+      custom_format ||= format
+
       p = "v#{version}/#{public_id}"
-      p<< ".#{format}" if format.present?
+      p<< ".#{custom_format}" if custom_format.present?
       p
     end
 
