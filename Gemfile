@@ -5,13 +5,16 @@ source "http://rubygems.org"
 # development dependencies will be added by default to the :development group.
 gemspec
 
-# jquery-rails is used by the dummy application
+# used by the dummy application
 gem 'jquery-rails'
 gem 'cloudinary'
+gem 'simple_form', '~> 2.0.0'
 
 group :assets do
   gem 'coffee-rails', '~> 3.2.1'
 end
+
+
 
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or
