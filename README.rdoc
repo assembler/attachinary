@@ -1,5 +1,8 @@
 = Attachinary
 
+== Installation
+
+rake attachinary:install:migrations
 
 
 == TODO:
