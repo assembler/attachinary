@@ -1,7 +1,9 @@
 # Attachinary
 
-Handling image and raw file attachments with ease. It uses [Cloudinary](http://cloudinary.com) as storage. 
+Handling image and raw file attachments with ease.
+It uses [Cloudinary](http://cloudinary.com) as storage.
 
+It is structured as mountable rails engine.
 
 
 ## Installation
@@ -10,8 +12,14 @@ Make sure that you have [cloudinary gem](https://github.com/cloudinary/cloudinar
 
 	rake attachinary:install:migrations
 	rake db:migrate
-	
+
 It will create two tables. One for storing files and other for association with your models.
+
+Add following line in your `routes.rb` file to mount the gem:
+
+	mount Attachinary::Engine => "/attachinary"
+
+That's it.
 
 
 ## Usage
@@ -19,10 +27,10 @@ It will create two tables. One for storing files and other for association with 
 Lets say that we want all of our **users** to have single **avatar** and many **photos** in their gallery. We also want *avatar* to be required. We also want to limit the number of photos user can upload to 10. We can declare it like this:
 
 	class User < ActiveRecord::Base
-		...		
-		has_attachment  :avatar, accept: ['jpg', 'png', 'gif']		
+		...
+		has_attachment  :avatar, accept: ['jpg', 'png', 'gif']
 		has_attachments :photos, maximum: 10
-		
+
 		validates :avatar_id, presence: true
 		...
 	end
@@ -40,7 +48,7 @@ If you're using [SimpleForm](https://github.com/plataformatec/simple_form), you 
 Finally, you have to include `attachinary` into your asset pipeline. In your `application.js`, add following line:
 
 	//= require attachinary
-	
+
 And, add this code on document ready:
 
 	$('.attachinary-input').attachinary()
