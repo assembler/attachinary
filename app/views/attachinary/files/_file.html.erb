@@ -1,5 +1,0 @@
-<div class="attachinary_file">
-  <%= cl_image_tag(file.path, { size: '90x90', crop: :fill, html_width: nil, html_height: nil }) %>
-  <%= link_to 'delete', attachinary_engine.file_path(file.id), method: :delete, remote: true,
-    class: 'attachinary_delete_link' %>
-</div>
