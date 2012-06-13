@@ -20,7 +20,8 @@ module Attachinary
     end
 
     def fullpath(options={})
-      Cloudinary::Utils.cloudinary_url(path(options[:format]), options)
+      format = options.delete(:format)
+      Cloudinary::Utils.cloudinary_url(path(format), options)
     end
 
     def self.upload!(file)
