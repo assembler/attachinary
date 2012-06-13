@@ -19,6 +19,10 @@ module Attachinary
       p
     end
 
+    def fullpath(options={})
+      Cloudinary::Utils.cloudinary_url(path(options[:format]), options)
+    end
+
     def self.upload!(file)
       response = Cloudinary::Uploader.upload(file, tags: "env_#{Rails.env}")
       create! response.slice('public_id', 'version', 'width', 'height', 'format', 'resource_type')

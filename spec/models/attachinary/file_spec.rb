@@ -11,7 +11,7 @@ describe Attachinary::File do
     it { should_not have_valid(:resource_type).when(nil) }
   end
 
-  describe '#path' do
+  describe '#path(custom_format=nil)' do
     context "image resource_type" do
       subject { build(:file, public_id: 'id', version: '1', format: 'jpg', resource_type: 'image') }
 
@@ -30,6 +30,13 @@ describe Attachinary::File do
         subject.path('png').should == 'v1/id.txt'
         subject.path(false).should == 'v1/id.txt'
       end
+    end
+  end
+
+  describe '#fullpath(options={})', :focus do
+    it 'delegates to Cloudinary' do
+      Cloudinary::Utils.stub(:cloudinary_url).with('v1/id1.png', format: 'png').and_return('http_png')
+      subject.fullpath(format: 'png').should == 'http_png'
     end
   end
 
