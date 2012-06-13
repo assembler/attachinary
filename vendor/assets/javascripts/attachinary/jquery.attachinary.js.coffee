@@ -41,7 +41,6 @@
       @files = @options.files
 
       @initFileUpload()
-      @addHiddenField()
       @addFilesContainer()
       @bindEventHandlers()
       @redraw()
@@ -117,26 +116,25 @@
       else
         @$input.prop('disabled', false)
 
-
-    addHiddenField: ->
-      @$hiddenInput = $('<input type="hidden">')
-      @$hiddenInput.attr 'name', @options.field_name
-      @$input.after @$hiddenInput
-
     addFilesContainer: ->
       @$filesContainer = $('<div class="attachinary_container">')
       @$input.after @$filesContainer
 
     redraw: ->
-      ids = (file.id for file in @files) || []
-      @$hiddenInput.val ids.join(',')
-
       @$filesContainer.empty()
       if @files.length > 0
-        @$filesContainer.show()
-        @$filesContainer.html @config.render(@files)
+        for file in @files
+          $hidden = $('<input type="hidden">')
+          name = @options.field_name
+          name+= "[]" unless @options.single
+          $hidden.attr 'name', name
+          $hidden.val file.id
+          @$filesContainer.append $hidden
+
+        @$filesContainer.append @config.render(@files)
         @$filesContainer.find('[data-remove]').on 'click', (event) =>
           @removeFile $(event.target).data('remove')
+        @$filesContainer.show()
       else
         @$filesContainer.hide()
 
