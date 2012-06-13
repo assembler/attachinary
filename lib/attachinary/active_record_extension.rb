@@ -16,7 +16,7 @@ module Attachinary
         through: :"#{scope}_attachment",
         source: :file
 
-      # attr_accessible :photo_id
+      # attr_accessible :photo_id, :photo_file
       attr_accessible :"#{scope}_id", :"#{scope}_file" if options[:accessible]
 
       # attr_accessor :photo
@@ -101,8 +101,8 @@ module Attachinary
         through: :"#{singular}_attachments",
         source: :file
 
-      # attr_accessible :image_ids
-      attr_accessible :"#{singular}_ids" if options[:accessible]
+      # attr_accessible :image_ids, :image_files
+      attr_accessible :"#{singular}_ids", :"#{singular}_files" if options[:accessible]
 
       # attr_accessor :images
       attr_accessor :"#{scope}"
