@@ -18,7 +18,7 @@ module Attachinary
     end
 
     initializer "attachinary.enable_simple_form" do |app|
-      require "attachinary/simple_form" if defined?(::SimpleForm)
+      require "attachinary/simple_form" if defined?(::SimpleForm::Inputs::Base)
     end
 
   end
