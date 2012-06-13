@@ -1,4 +1,6 @@
-<%= form_for note, url: notes_path(kind: params[:kind]) do |f| %>
+<%= form_for note do |f| %>
+
+  <%= hidden_field_tag 'kind', params[:kind] %>
 
   <%= f.label 'Body' %>
   <br />

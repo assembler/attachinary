@@ -17,4 +17,23 @@ class NotesController < ApplicationController
     end
   end
 
+  def edit
+    @note = Note.find params[:id]
+  end
+
+  def update
+    @note = Note.find params[:id]
+    if @note.update_attributes params[:note]
+      redirect_to notes_url
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    @note = Note.find params[:id]
+    @note.destroy
+    redirect_to :back
+  end
+
 end
