@@ -14,4 +14,9 @@ FactoryGirl.define do
     scope 'photo'
   end
 
+  factory :note do
+    sequence(:body) { |n| "Note ##{n}"}
+    association :photo, factory: :file
+  end
+
 end
