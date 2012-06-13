@@ -122,14 +122,11 @@
 
     redraw: ->
       @$filesContainer.empty()
+      @$filesContainer.append @makeHiddenField(null)
+
       if @files.length > 0
         for file in @files
-          $hidden = $('<input type="hidden">')
-          name = @options.field_name
-          name+= "[]" unless @options.single
-          $hidden.attr 'name', name
-          $hidden.val file.id
-          @$filesContainer.append $hidden
+          @$filesContainer.append @makeHiddenField(file.id)
 
         @$filesContainer.append @config.render(@files)
         @$filesContainer.find('[data-remove]').on 'click', (event) =>
@@ -137,6 +134,17 @@
         @$filesContainer.show()
       else
         @$filesContainer.hide()
+
+    makeHiddenField: (value) ->
+      $input = $('<input type="hidden">')
+
+      name = @options.field_name
+      name+= "[]" unless @options.single
+
+      $input.attr 'name', name
+      $input.val value
+      $input
+
 
 
 
