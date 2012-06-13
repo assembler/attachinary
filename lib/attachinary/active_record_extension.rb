@@ -17,7 +17,7 @@ module Attachinary
         source: :file
 
       # attr_accessible :photo_id
-      attr_accessible :"#{scope}_id" if options[:accessible]
+      attr_accessible :"#{scope}_id", :"#{scope}_file" if options[:accessible]
 
       # attr_accessor :photo
       attr_accessor :"#{scope}"
@@ -27,6 +27,13 @@ module Attachinary
       # end
       define_method :"#{scope}_id=" do |id|
         send(:"#{scope}=", ::Attachinary::File.find_by_id(id))
+      end
+
+      # def photo_file=(f)
+      #   photo = ::Attachinary::File.upload!(f)
+      # end
+      define_method :"#{scope}_file=" do |f|
+        send(:"#{scope}=", ::Attachinary::File.upload!(f))
       end
 
       # def photo_id
@@ -71,6 +78,7 @@ module Attachinary
       define_method :"#{scope}_options" do
         options.merge({
           field_name: "#{scope}_id",
+          file_field_name: "#{scope}_file",
           single: true,
           maximum: 1
         })
@@ -109,6 +117,15 @@ module Attachinary
         files = [ids].flatten.compact.uniq.reject(&:blank?).map do |id|
           ::Attachinary::File.find_by_id(id)
         end.compact
+        send(:"#{scope}=", files)
+      end
+
+      # def image_files=(fs)
+      #   files = fs.map { |f| ::Attachinary::File.upload!(f) }
+      #   images = files
+      # end
+      define_method :"#{singular}_files=" do |fs|
+        files = fs.map { |f| ::Attachinary::File.upload!(f) }
         send(:"#{scope}=", files)
       end
 
@@ -153,6 +170,7 @@ module Attachinary
       define_method :"#{singular}_options" do
         options.merge({
           field_name: "#{singular}_ids",
+          file_field_name: "#{singular}_files",
           single: false
         })
       end

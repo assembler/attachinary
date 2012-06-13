@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Attachinary::File do
   subject { build(:file) }
+  let(:gif) { Rack::Test::UploadedFile.new(File.expand_path('../../../support/A.gif', __FILE__), 'image/gif') }
 
   describe 'validations' do
     it { should be_valid }
@@ -29,6 +30,34 @@ describe Attachinary::File do
         subject.path('png').should == 'v1/id.txt'
         subject.path(false).should == 'v1/id.txt'
       end
+    end
+  end
+
+  describe '.upload!(f)' do
+    let(:cloudinary_response) {
+      {
+        public_id: "id",
+        version: "1",
+        width: 50,
+        height: 50,
+        format: 'gif',
+        resource_type: 'image'
+      }
+    }
+
+    before do
+      stub_request(:post, %r{api.cloudinary.com}).
+         to_return(:status => 200, :body => cloudinary_response.to_json)
+    end
+
+    it 'uploads file to Cloudinary and returns File object' do
+      file = Attachinary::File.upload!(gif)
+      file.public_id.should == "id"
+      file.version.should == "1"
+      file.width.should == 50
+      file.height.should == 50
+      file.format.should == 'gif'
+      file.resource_type.should == 'image'
     end
   end
 

@@ -19,6 +19,11 @@ module Attachinary
       p
     end
 
+    def self.upload!(file)
+      response = Cloudinary::Uploader.upload(file, tags: "env_#{Rails.env}")
+      create! response.slice('public_id', 'version', 'width', 'height', 'format', 'resource_type')
+    end
+
   private
     def destroy_file
       Cloudinary::Uploader.destroy(public_id) if public_id

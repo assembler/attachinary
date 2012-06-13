@@ -32,15 +32,16 @@ module Attachinary
       end
 
       options[:html][:data] ||= {}
-      options[:html][:data][:attachinary] = options.delete(:attachinary) || {}
+      options[:html][:data][:attachinary] = options[:attachinary] || {}
       options[:html][:data][:attachinary][:callback] = attachinary.callback_path
       options[:html][:data][:attachinary][:files] = Attachinary::File.where(id: value).all
+      options[:html][:data][:attachinary][:file_field_name] = name.gsub(options[:attachinary][:field_name], options[:attachinary][:file_field_name])
       options[:html][:data][:attachinary][:field_name] = name
 
       options[:html][:data][:form_data] = cloudinary_params.reject{ |k, v| v.blank? }
       options[:html][:data][:url] = cloudinary_upload_url
 
-      file_field_tag(name, options[:html])
+      file_field_tag(options[:html][:data][:attachinary][:file_field_name], options[:html])
     end
 
   end
