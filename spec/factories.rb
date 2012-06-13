@@ -5,7 +5,6 @@ FactoryGirl.define do
     sequence(:version) { |n| "version_#{n}"}
     width 800
     height 600
-    format 'jpg'
     resource_type 'image'
   end
 

@@ -11,10 +11,24 @@ describe Attachinary::File do
   end
 
   describe '#path' do
-    subject { build(:file, public_id: 'id', version: '1', format: 'jpg') }
-    it 'returns proper cloudinary file name' do
-      subject.path.should == 'v1/id.jpg'
-      subject.path('png').should == 'v1/id.png'
+    context "image resource_type" do
+      subject { build(:file, public_id: 'id', version: '1', format: 'jpg', resource_type: 'image') }
+
+      it 'allows you to pick format' do
+        subject.path.should == 'v1/id.jpg'
+        subject.path('png').should == 'v1/id.png'
+        subject.path(false).should == 'v1/id'
+      end
+    end
+
+    context "raw resource_type" do
+      subject { build(:file, public_id: 'id.txt', version: '1', format: '', resource_type: 'raw') }
+
+      it 'ignores the format' do
+        subject.path.should == 'v1/id.txt'
+        subject.path('png').should == 'v1/id.txt'
+        subject.path(false).should == 'v1/id.txt'
+      end
     end
   end
 

@@ -11,10 +11,11 @@ module Attachinary
     end
 
     def path(custom_format=nil)
-      custom_format ||= format
-
       p = "v#{version}/#{public_id}"
-      p<< ".#{custom_format}" if custom_format.present?
+      if resource_type == 'image' && custom_format != false
+        custom_format ||= format
+        p<< ".#{custom_format}"
+      end
       p
     end
 
