@@ -20,6 +20,9 @@ describe Note do
         photo2 = create(:file)
         subject.photo = photo2
         subject.photo_id.should == photo2.id
+
+        subject.photo_id = nil
+        subject.photo.should be_nil
       end
     end
 
@@ -37,6 +40,12 @@ describe Note do
         subject.photo_options[:maximum].should == 1
         subject.photo_options[:single].should == true
       end
+    end
+
+    it 'persists' do
+      note1 = create(:note)
+      note2 = Note.find(note1.id)
+      note2.photo.should == note1.photo
     end
   end
 
