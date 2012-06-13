@@ -20,7 +20,7 @@ Then, run following rake command in terminal to create necessary tables:
 Add following line in your `routes.rb` file to mount the engine:
 
 	mount Attachinary::Engine => "/attachinary"
-	
+
 That's it. Oh, and make sure that you have [cloudinary gem](https://github.com/cloudinary/cloudinary_gem) installed and properly configured.
 
 
@@ -62,11 +62,11 @@ Plugin is fully customizable. It uses John Resig's micro templating in the backg
 ### Displaying avatar and photos
 
 Here comes the good part. There is no need to transform images on your server. Instead, you can request image transformations directly from Cloudinary. First time you request image, it is created and cached on the Cloudinary server for later use. Here is sample code that you can use in your `_user.html.erb` partial:
-	
+
 	<% if @user.avatar? %>
 		<%= cl_image_tag(@user.avatar.path, { size: '50x50', crop: :face }) %>
 	<% end %>
-	
+
 	<% @user.photos.each do |photo| %>
 		<%= cl_image_tag(photo.path, { size: '125x125', crop: :fit }) %>
 	<% end %>
@@ -93,4 +93,4 @@ Whenever you feel like changing image sizes, you don't need to set rake task tha
 
 Developed by Milovan Zogovic.
 
-This software is released under the Simplified BSD License.
+This software is released under the MIT License.

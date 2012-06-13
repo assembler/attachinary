@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.summary     = "attachinary-#{s.version}"
   s.description = "Attachments handler for Rails that uses Cloudinary for storage."
 
-  s.files = Dir["{app,config,lib,vendor}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,lib,vendor}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency 'rails', '~> 3.2'
