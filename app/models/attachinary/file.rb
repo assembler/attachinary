@@ -25,8 +25,10 @@ module Attachinary
     end
 
     def self.upload!(file)
-      response = Cloudinary::Uploader.upload(file, tags: "env_#{Rails.env}")
-      create! response.slice('public_id', 'version', 'width', 'height', 'format', 'resource_type')
+      if file.respond_to?(:read)
+        response = Cloudinary::Uploader.upload(file, tags: "env_#{Rails.env}")
+        create! response.slice('public_id', 'version', 'width', 'height', 'format', 'resource_type')
+      end
     end
 
   private

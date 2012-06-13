@@ -125,7 +125,7 @@ module Attachinary
       #   images = files
       # end
       define_method :"#{singular}_files=" do |fs|
-        files = fs.map { |f| ::Attachinary::File.upload!(f) }
+        files = fs.map{ |f| ::Attachinary::File.upload!(f) }.compact
         send(:"#{scope}=", files)
       end
 

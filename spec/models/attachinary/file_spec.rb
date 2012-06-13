@@ -36,6 +36,8 @@ describe Attachinary::File do
   describe '#fullpath(options={})' do
     it 'delegates to Cloudinary' do
       Cloudinary::Utils.stub(:cloudinary_url).with('v1/id1.png', {}).and_return('http_png')
+      subject.public_id = 'id1'
+      subject.version = '1'
       subject.fullpath(format: 'png').should == 'http_png'
     end
   end
