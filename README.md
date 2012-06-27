@@ -1,9 +1,19 @@
 # Attachinary
 
-Handling image and raw file attachments with ease.
-It uses [Cloudinary](http://cloudinary.com) as storage.
+Need lightweight attachment (photos and raw files) handler for any of your model, in either has\_one or has\_many relation, without altering your models' schema and with zero effort? Attachinary is the tool for you!
 
-It is structured as mountable rails engine.
+Why is Attachinary different:
+
+* **No need to alter your model schema** any time you introduce new kind of attachment.
+* Handles **both has\_one and has\_many** use cases.
+* **No need for ImageMagick** (or similar) - your thumbnails are generated on the fly by Cloudinary.
+* Fully customizable, built-in **jQuery plugin** for async file uploads with previews.
+* **Files are uploaded directly to Cloudinary** completely bypassing your app (without affecting its performance).
+* **Very easy to use**. Once set up, 1 line is enough to add attachment support to your model. **No migrations, no Uploaders**.
+* **Lightweight form submission**. Attachinary handles file upload asynchronously and the only thing that is passed to your server are the IDs of the files. That makes form postbacks fast and reliable.
+* All the [benefits of Cloudinary](http://cloudinary.com/documentation/image_transformations) (resizing, cropping, rotating, rounding corners, **face detection**...).
+
+Attachinary uses [Cloudinary](http://cloudinary.com) service. Gem is structured as mountable rails engine.
 
 
 ## Installation
@@ -78,8 +88,8 @@ Whenever you feel like changing image sizes, you don't need to set rake task tha
 
 ## Conventions
 
-* always use singular name for `has_attachment`
-* always use plural name for `has_attachments`
+* always use singular identifier after `has_attachment` (e.g. `has_attachment :photo`)
+* always use plural identifier after `has_attachments` (e.g. `has_attachments :photos`)
 
 
 ## Requirements and Compatibility
@@ -87,6 +97,7 @@ Whenever you feel like changing image sizes, you don't need to set rake task tha
 * Cloudinary
 * Ruby 1.9
 * Rails 3.2+
+* jQuery
 
 
 ## Credits and License
