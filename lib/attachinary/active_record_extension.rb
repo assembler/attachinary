@@ -30,10 +30,10 @@ module Attachinary
       end
 
       # def photo_file=(f)
-      #   photo = ::Attachinary::File.upload!(f)
+      #   photo = ::Attachinary::File.upload!(f) if f.present?
       # end
       define_method :"#{scope}_file=" do |f|
-        send(:"#{scope}=", ::Attachinary::File.upload!(f))
+        send(:"#{scope}=", ::Attachinary::File.upload!(f)) if f.present?
       end
 
       # def photo_id
