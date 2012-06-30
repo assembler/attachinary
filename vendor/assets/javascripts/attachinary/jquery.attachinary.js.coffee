@@ -50,8 +50,10 @@
       options =
         maxFileSize: 10000000
         dataType: 'json'
-        acceptFileTypes: new RegExp("^#{@$input.attr('accept').split(",").join("|")}$", "i")
         headers: {"X-Requested-With": "XMLHttpRequest"}
+
+      if @$input.attr('accept')
+        options.acceptFileTypes = new RegExp("^#{@$input.attr('accept').split(",").join("|")}$", "i")
 
       @$input.attr('name', 'file')
       @$input.fileupload(options)
