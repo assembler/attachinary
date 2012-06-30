@@ -18,11 +18,15 @@ Attachinary uses [Cloudinary](http://cloudinary.com) service. Gem is structured 
 
 ## Installation
 
-Add following line to your `Gemfile`:
+First, make sure that you have [cloudinary gem](https://github.com/cloudinary/cloudinary_gem) installed and properly configured. Also, make sure that you have following line in head section of your application layout file:
+
+	<%= cloudinary_js_config %>
+
+Then, add following line to your `Gemfile`:
 
     gem 'attachinary'
 
-Then, run following rake command in terminal to create necessary tables:
+Run following rake command in terminal to create necessary tables:
 
 	rake attachinary:install:migrations
 	rake db:migrate
@@ -31,7 +35,7 @@ Add following line in your `routes.rb` file to mount the engine:
 
 	mount Attachinary::Engine => "/attachinary"
 
-That's it. Oh, and make sure that you have [cloudinary gem](https://github.com/cloudinary/cloudinary_gem) installed and properly configured.
+
 
 
 ## Usage
