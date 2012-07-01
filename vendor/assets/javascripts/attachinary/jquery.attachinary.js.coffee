@@ -15,7 +15,7 @@
               <img
                 src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'jpg', "crop": 'fill', "width": 75, "height": 75 }) %>"
                 alt="" width="75" height="75" />
-              <button data-remove="<%= files[i].id %>">Remove</button>
+              <a href="#" data-remove="<%= files[i].id %>">Remove</a>
             </li>
           <% } %>
         </ul>
@@ -132,7 +132,9 @@
 
         @$filesContainer.append @config.render(@files)
         @$filesContainer.find('[data-remove]').on 'click', (event) =>
+          event.preventDefault()
           @removeFile $(event.target).data('remove')
+
         @$filesContainer.show()
       else
         @$filesContainer.hide()
