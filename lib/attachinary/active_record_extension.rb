@@ -2,7 +2,7 @@ module Attachinary
   module ActiveRecordExtension
 
     def has_attachment(scope, options={})
-      apply_defaults!(options)
+      attachinary_apply_defaults!(options)
 
       # has_one :photo_attachment, ...
       has_one :"#{scope}_attachment",
@@ -86,7 +86,7 @@ module Attachinary
     end
 
     def has_attachments(scope, options={})
-      apply_defaults!(options)
+      attachinary_apply_defaults!(options)
       singular = scope.to_s.singularize
 
       # has_many :image_attachments
@@ -177,7 +177,7 @@ module Attachinary
     end
 
   private
-    def apply_defaults!(options)
+    def attachinary_apply_defaults!(options)
       options.reverse_merge!({
         accessible: true
       })
