@@ -63,7 +63,10 @@ If you're using [SimpleForm](https://github.com/plataformatec/simple_form), you 
 
 Finally, you have to include `attachinary` into your asset pipeline. In your `application.js`, add following line:
 
+	...
+	//= require cloudinary
 	//= require attachinary
+	...
 
 And, add this code on document ready:
 

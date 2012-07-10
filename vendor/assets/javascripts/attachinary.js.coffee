@@ -1,3 +1,8 @@
+#= require cloudinary/jquery.ui.widget
+#= require cloudinary/jquery.iframe-transport
+#= require cloudinary/jquery.fileupload
+#= require cloudinary/jquery.cloudinary
+
 (($) ->
 
   $.attachinary =

@@ -19,8 +19,16 @@ module Attachinary
       # attr_accessible :photo_id, :photo_file
       attr_accessible :"#{scope}_id", :"#{scope}_file" if options[:accessible]
 
-      # attr_accessor :photo
-      attr_accessor :"#{scope}"
+      # attr_writer :photo
+      attr_writer :"#{scope}"
+
+      # def photo
+      #   @photo ||= photo_attachment_file
+      # end
+      define_method :"#{scope}" do
+        instance_variable_set :"@#{scope}",
+          (instance_variable_get(:"@#{scope}") || send(:"#{scope}_attachment_file"))
+      end
 
       # def photo_id=(id)
       #   photo = ::Attachinary::File.find_by_id(id)
@@ -48,18 +56,6 @@ module Attachinary
       # end
       define_method :"#{scope}?" do
         send(:"#{scope}").present?
-      end
-
-
-      # after_initialize do
-      #   unless photo?
-      #     photo = photo_attachment_file
-      #   end
-      # end
-      after_initialize do
-        unless send(:"#{scope}?")
-          send(:"#{scope}=", send(:"#{scope}_attachment_file"))
-        end
       end
 
       # before_save do
@@ -104,8 +100,16 @@ module Attachinary
       # attr_accessible :image_ids, :image_files
       attr_accessible :"#{singular}_ids", :"#{singular}_files" if options[:accessible]
 
-      # attr_accessor :images
-      attr_accessor :"#{scope}"
+      # attr_writer :images
+      attr_writer :"#{scope}"
+
+      # def images
+      #   @images ||= image_attachment_files
+      # end
+      define_method :"#{scope}" do
+        instance_variable_set :"@#{scope}",
+          (instance_variable_get(:"@#{scope}") || send(:"#{singular}_attachment_files"))
+      end
 
       # def image_ids=(ids)
       #   files = [ids].flatten.compact.uniq.reject(&:blank?) do |id|
@@ -141,18 +145,6 @@ module Attachinary
       # end
       define_method :"#{scope}?" do
         send(:"#{scope}").present?
-      end
-
-
-      # after_initialize do
-      #   unless images?
-      #     images = image_attachment_files
-      #   end
-      # end
-      after_initialize do
-        unless send(:"#{scope}?")
-          send(:"#{scope}=", send(:"#{singular}_attachment_files"))
-        end
       end
 
       # before_save do
