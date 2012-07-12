@@ -1,3 +1,6 @@
+= Version 0.0.7
+  * BUG FIX: removing single attachment
+
 = Version 0.0.6
   * attachment lazy loading
   * removed copies of cloudinary javascript files

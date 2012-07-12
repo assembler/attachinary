@@ -23,11 +23,16 @@ module Attachinary
       attr_writer :"#{scope}"
 
       # def photo
-      #   @photo ||= photo_attachment_file
+      #   unless defined?(@photo)
+      #     @photo = photo_attachment_file
+      #   end
+      #   @photo
       # end
       define_method :"#{scope}" do
-        instance_variable_set :"@#{scope}",
-          (instance_variable_get(:"@#{scope}") || send(:"#{scope}_attachment_file"))
+        unless instance_variable_defined? :"@#{scope}"
+          instance_variable_set :"@#{scope}", send(:"#{scope}_attachment_file")
+        end
+        instance_variable_get :"@#{scope}"
       end
 
       # def photo_id=(id)
@@ -104,11 +109,16 @@ module Attachinary
       attr_writer :"#{scope}"
 
       # def images
-      #   @images ||= image_attachment_files
+      #   unless defined?(@images)
+      #     @images = image_attachment_files
+      #   end
+      #   @images
       # end
       define_method :"#{scope}" do
-        instance_variable_set :"@#{scope}",
-          (instance_variable_get(:"@#{scope}") || send(:"#{singular}_attachment_files"))
+        unless instance_variable_defined? :"@#{scope}"
+          instance_variable_set :"@#{scope}", send(:"#{singular}_attachment_files")
+        end
+        instance_variable_get :"@#{scope}"
       end
 
       # def image_ids=(ids)
