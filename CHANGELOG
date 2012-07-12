@@ -1,3 +1,6 @@
+= Version 0.0.8
+  * no explicit require of cloudinary assets
+
 = Version 0.0.7
   * BUG FIX: removing single attachment
 

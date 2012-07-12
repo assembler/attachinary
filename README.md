@@ -61,9 +61,10 @@ If you're using [SimpleForm](https://github.com/plataformatec/simple_form), you 
 	<%= f.input :avatar, as: :attachinary %>
 	<%= f.input :photos, as: :attachinary %>
 
-Finally, you have to include `attachinary` into your asset pipeline. In your `application.js`, add following line:
+Finally, you have to include both `cloudinary` and `attachinary` into your asset pipeline. In your `application.js`, add following lines:
 
 	...
+	//= require cloudinary
 	//= require attachinary
 	...
 
