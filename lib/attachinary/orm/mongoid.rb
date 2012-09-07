@@ -1,4 +1,4 @@
-require 'file_mixin'
-require 'mongoid/file'
+require_relative 'file_mixin'
+require_relative 'mongoid/file'
 
 # Mongoid hook
