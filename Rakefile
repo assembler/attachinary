@@ -41,3 +41,10 @@ RSpec::Core::RakeTask.new(:spec)
 task :default => :spec
 
 
+desc 'Run Devise tests for all ORMs.'
+task :pre_commit do
+  Dir[File.join(File.dirname(__FILE__), 'spec', 'orm', '*.rb')].each do |file|
+    orm = File.basename(file).split(".").first
+    exit 1 unless system "rake spec ATTACHINARY_ORM=#{orm}"
+  end
+end

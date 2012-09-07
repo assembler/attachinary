@@ -14,6 +14,9 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
 end
 
+group :mongoid do
+  gem 'mongoid', '~> 3.0.0'
+end
 
 
 # Declare any dependencies that are still in development here instead of in
