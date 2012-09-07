@@ -34,7 +34,7 @@ module Attachinary
       options[:html][:data] ||= {}
       options[:html][:data][:attachinary] = options[:attachinary] || {}
       options[:html][:data][:attachinary][:callback] = attachinary.callback_path
-      options[:html][:data][:attachinary][:files] = Attachinary::File.where(id: value).all
+      options[:html][:data][:attachinary][:files] = Attachinary::File.where(id: value).all #TODO: FIX
       options[:html][:data][:attachinary][:file_field_name] = name.gsub(options[:attachinary][:field_name], options[:attachinary][:file_field_name])
       options[:html][:data][:attachinary][:field_name] = name
 

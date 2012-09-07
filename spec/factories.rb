@@ -10,7 +10,7 @@ FactoryGirl.define do
   end
 
   factory :attachment, class: Attachinary::Attachment do
-    association :parent, factory: :file
+    association :parent, factory: :note
     file
     scope 'photo'
   end
