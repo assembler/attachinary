@@ -103,6 +103,4 @@ describe Note do
       end
     end
   end
-
-
 end
