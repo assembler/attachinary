@@ -1,3 +1,8 @@
+= Version 0.1.0
+  * Support for Mongoid added. You need to specify which ORM you want
+  to use by adding `require "attachinary/orm/mongoid|active_record"`
+  in initializer.
+
 = Version 0.0.8
   * no explicit require of cloudinary assets
 
