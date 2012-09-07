@@ -9,10 +9,12 @@ FactoryGirl.define do
     resource_type 'image'
   end
 
-  factory :attachment, class: Attachinary::Attachment do
-    association :parent, factory: :note
-    file
-    scope 'photo'
+  if defined? Attachinary::Attachment
+    factory :attachment, class: Attachinary::Attachment do
+      association :parent, factory: :note
+      file
+      scope 'photo'
+    end
   end
 
   factory :note do
