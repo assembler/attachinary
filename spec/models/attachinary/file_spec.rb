@@ -9,6 +9,7 @@ describe Attachinary::File do
     it { should_not have_valid(:public_id).when(nil) }
     it { should_not have_valid(:version).when(nil) }
     it { should_not have_valid(:resource_type).when(nil) }
+    it { should_not have_valid(:scope).when(nil) }
   end
 
   describe '#path(custom_format=nil)' do
@@ -60,13 +61,14 @@ describe Attachinary::File do
     end
 
     it 'uploads file to Cloudinary and returns File object' do
-      file = Attachinary::File.upload!(gif)
+      file = Attachinary::File.upload!(gif, 'photo')
       file.public_id.should == "id"
       file.version.should == "1"
       file.width.should == 50
       file.height.should == 50
       file.format.should == 'gif'
       file.resource_type.should == 'image'
+      file.scope.should == 'photo'
     end
   end
 

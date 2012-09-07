@@ -5,6 +5,10 @@ describe Note do
   let(:gifA) { Rack::Test::UploadedFile.new(File.expand_path('../../support/A.gif', __FILE__), 'image/gif') }
   let(:gifB) { Rack::Test::UploadedFile.new(File.expand_path('../../support/B.gif', __FILE__), 'image/gif') }
 
+  before do
+    Cloudinary::Uploader.stub destroy: true
+  end
+
   describe 'validations' do
     it { should be_valid }
     it { should_not have_valid(:photo_id).when(nil) }
@@ -29,7 +33,7 @@ describe Note do
 
       it 'accepts files' do
         file = create(:file)
-        ::Attachinary::File.stub(:upload!).with(gifA).and_return(file)
+        ::Attachinary::File.stub(:upload!).with(gifA, 'photo').and_return(file)
 
         subject.photo_file = gifA
         subject.photo.should == file
@@ -73,18 +77,18 @@ describe Note do
         subject.images << image2
         subject.images.should =~ [image1, image2]
 
+        subject.image_ids = [image1.id]
+        subject.images.should =~ [image1]
+
         subject.images.clear
         subject.images.should be_blank
-
-        subject.image_ids = [image1.id, image2.id]
-        subject.images.should =~ [image1, image2]
       end
 
       it 'accepts files' do
         fileA = create(:file)
         fileB = create(:file)
-        ::Attachinary::File.stub(:upload!).with(gifA).and_return(fileA)
-        ::Attachinary::File.stub(:upload!).with(gifB).and_return(fileB)
+        ::Attachinary::File.stub(:upload!).with(gifA, 'images').and_return(fileA)
+        ::Attachinary::File.stub(:upload!).with(gifB, 'images').and_return(fileB)
 
         subject.image_files = [gifA, gifB]
         subject.images.should =~ [fileA, fileB]

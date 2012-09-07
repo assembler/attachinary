@@ -14,7 +14,7 @@ module Attachinary
 
   private
     def file_params
-      request.query_parameters.slice(:public_id, :version, :width, :height, :format, :resource_type)
+      request.query_parameters.slice(:public_id, :version, :width, :height, :format, :resource_type, :scope)
     end
 
   end

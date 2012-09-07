@@ -13,18 +13,10 @@
 
 ActiveRecord::Schema.define(:version => 20120608104143) do
 
-  create_table "attachinary_attachments", :force => true do |t|
+  create_table "attachinary_files", :force => true do |t|
     t.integer  "parent_id"
     t.string   "parent_type"
-    t.integer  "file_id"
     t.string   "scope"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  add_index "attachinary_attachments", ["parent_type", "parent_id", "scope"], :name => "by_scoped_parent"
-
-  create_table "attachinary_files", :force => true do |t|
     t.string   "public_id"
     t.string   "version"
     t.integer  "width"
@@ -34,6 +26,8 @@ ActiveRecord::Schema.define(:version => 20120608104143) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
+
+  add_index "attachinary_files", ["parent_type", "parent_id", "scope"], :name => "by_scoped_parent"
 
   create_table "notes", :force => true do |t|
     t.text     "body"

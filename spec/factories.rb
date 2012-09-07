@@ -1,5 +1,12 @@
 FactoryGirl.define do
 
+  factory :note do
+    sequence(:body) { |n| "Note ##{n}"}
+    after_build do |note|
+      note.photo = FactoryGirl.create(:file)
+    end
+  end
+
   factory :file, class: Attachinary::File do
     sequence(:public_id) { |n| "id#{n}"}
     sequence(:version) { |n| "#{n}"}
@@ -7,19 +14,7 @@ FactoryGirl.define do
     height 600
     format 'jpg'
     resource_type 'image'
-  end
-
-  if defined? Attachinary::Attachment
-    factory :attachment, class: Attachinary::Attachment do
-      association :parent, factory: :note
-      file
-      scope 'photo'
-    end
-  end
-
-  factory :note do
-    sequence(:body) { |n| "Note ##{n}"}
-    association :photo, factory: :file
+    scope 'photo'
   end
 
 end

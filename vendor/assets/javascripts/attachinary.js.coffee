@@ -93,6 +93,7 @@
 
 
     issueCallback: (data) ->
+      data.scope = @options.scope
       $.ajax
         url: @options.callback,
         data: data,
