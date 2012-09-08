@@ -44,6 +44,7 @@ desc 'Run Devise tests for all ORMs.'
 task :spec_all_orms do
   Dir[File.join(File.dirname(__FILE__), 'spec', 'orm', '*.rb')].each do |file|
     orm = File.basename(file).split(".").first
+    puts "\n\n-------- ORM: #{orm}\n\n"
     exit 1 unless system "rake spec ATTACHINARY_ORM=#{orm}"
   end
 end
