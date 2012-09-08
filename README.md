@@ -86,6 +86,7 @@ Attachinary jquery plugin is based upon [jQuery File Upload plugin](https://gith
 
 Plugin is fully customizable. It uses John Resig's micro templating in the background, but you can override it with whatever you like. Check out the source code for more configuration options you can set.
 
+
 ### Displaying avatar and photos
 
 Here comes the good part. There is no need to transform images on your server. Instead, you can request image transformations directly from Cloudinary. First time you request image, it is created and cached on the Cloudinary server for later use. Here is sample code that you can use in your `_user.html.erb` partial:
@@ -116,6 +117,12 @@ Whenever you feel like changing image sizes, you don't need to set rake task tha
 * Ruby 1.9
 * Rails 3.2+
 * jQuery
+
+
+### Browser Compatibility
+
+Attachinary jquery plugin uses JSON2 to generate JSON data.
+This works for all major browsers, but if you wish to support older ones (e.g. IE7-), include [json2.js](https://github.com/douglascrockford/JSON-js/blob/master/json2.js).
 
 
 ## Credits and License
