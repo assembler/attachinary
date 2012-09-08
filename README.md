@@ -57,7 +57,7 @@ Lets say that we want all of our **users** to have single **avatar** and many **
 		has_attachment  :avatar, accept: [:jpg, :png, :gif]
 		has_attachments :photos, maximum: 10
 
-		validates :avatar_id, presence: true
+		validates :avatar, presence: true
 		...
 	end
 
