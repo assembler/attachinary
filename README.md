@@ -1,16 +1,19 @@
-# Attachinary
+# Attachinary v1
+
+_Note: v1 is not backward compatible._
 
 Need lightweight attachment (photos and raw files) handler for any of your model, in either has\_one or has\_many relation, without altering your models' schema and with zero effort? Attachinary is the tool for you!
 
 Why is Attachinary different:
 
-* **No need to alter your model schema** any time you introduce new kind of attachment.
+* Supports both **ActiveRecord** and **Mongoid** ORMs!
+* **No need to alter your model schema** every time you introduce new kind of attachment.
 * Handles **both has\_one and has\_many** use cases.
 * **No need for ImageMagick** (or similar) - your thumbnails are generated on the fly by Cloudinary.
-* Fully customizable, built-in **jQuery plugin** for async file uploads with previews.
+* Fully customizable, custom **jQuery plugin** for async file uploads with previews.
 * **Files are uploaded directly to Cloudinary** completely bypassing your app (without affecting its performance).
 * **Very easy to use**. Once set up, 1 line is enough to add attachment support to your model. **No migrations, no Uploaders**.
-* **Lightweight form submission**. Attachinary handles file upload asynchronously and the only thing that is passed to your server are the IDs of the files. That makes form postbacks fast and reliable.
+* **Lightweight form submission**. Attachinary handles file upload asynchronously and the only thing that is passed to your server is metadata. That makes form postbacks fast and reliable.
 * All the [benefits of Cloudinary](http://cloudinary.com/documentation/image_transformations) (resizing, cropping, rotating, rounding corners, **face detection**...).
 
 Attachinary uses [Cloudinary](http://cloudinary.com) service. Gem is structured as mountable rails engine.
@@ -18,23 +21,30 @@ Attachinary uses [Cloudinary](http://cloudinary.com) service. Gem is structured 
 
 ## Installation
 
-First, make sure that you have [cloudinary gem](https://github.com/cloudinary/cloudinary_gem) installed and properly configured. Also, make sure that you have following line in head section of your application layout file:
+First, make sure that you have [cloudinary gem](https://github.com/cloudinary/cloudinary_gem) installed and properly configured.
 
-	<%= cloudinary_js_config %>
-
-Then, add following line to your `Gemfile`:
+Add following line to your `Gemfile`:
 
     gem 'attachinary'
 
-Run following rake command in terminal to create necessary tables:
+Specify which ORM you wish to use by adding following line to your `application.rb` file (or custom initializer):
+
+	require "attachinary/orm/YOUR_ORM" # active_record or mongoid
+
+If you're using `ActiveRecord` ORM, then run following lines to generate required table:
 
 	rake attachinary:install:migrations
 	rake db:migrate
 
-Add following line in your `routes.rb` file to mount the engine:
+Next, add following line in your `routes.rb` file:
 
 	mount Attachinary::Engine => "/attachinary"
 
+It will generate '/attachinary/cors' which will be used for iframe file transfers (for unsupported browsers).
+
+Finally, make sure that you have following line in head section of your application layout file:
+
+	<%= cloudinary_js_config %>
 
 
 
@@ -53,8 +63,8 @@ Lets say that we want all of our **users** to have single **avatar** and many **
 
 In our `_form.html.erb` template, we need to add only this:
 
-	<%= attachinary_file_field_tag 'user[avatar_id]', user.avatar_id, attachinary: user.avatar_options %>
-	<%= attachinary_file_field_tag 'user[photo_ids]', user.photo_ids, attachinary: user.photo_options %>
+	<%= attachinary_file_field_tag 'user[avatar]', user, :avatar %>
+	<%= attachinary_file_field_tag 'user[photos]', user, :photos %>
 
 If you're using [SimpleForm](https://github.com/plataformatec/simple_form), you can even shorten this to:
 
@@ -96,7 +106,8 @@ Whenever you feel like changing image sizes, you don't need to set rake task tha
 ## Conventions
 
 * always use singular identifier after `has_attachment` (e.g. `has_attachment :photo`)
-* always use plural identifier after `has_attachments` (e.g. `has_attachments :photos`)
+* always use plural identifier after `has_attachments` (e.g. `has_attachments :images`)
+* you can't use colliding identifiers (e.g. `has_attachment :photo` and `has_attachments :photos`) on same model.
 
 
 ## Requirements and Compatibility
