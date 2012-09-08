@@ -26,13 +26,18 @@ module Attachinary
 
       relation = "#{singular}_files"
 
-      # has_many :photo_files, ...
-      # has_many :image_files, ...
-      has_many :"#{relation}",
+      # # has_many :photo_files, ...
+      # # has_many :image_files, ...
+      # has_many :"#{relation}",
+      #   as: :attachinariable,
+      #   class_name: '::Attachinary::File',
+      #   conditions: { scope: scope.to_s },
+      #   dependent: :destroy
+
+      embeds_many :"#{relation}",
         as: :attachinariable,
         class_name: '::Attachinary::File',
-        conditions: { scope: scope.to_s },
-        dependent: :destroy
+        validate: false
 
       # attr_accessible :photo
       # attr_accessible :images
@@ -82,7 +87,7 @@ module Attachinary
             files = [JSON.parse(file)].flatten.map do |data|
               data = data.slice(*Attachinary::File.attr_accessible[:default].to_a)
               Attachinary::File.new(data) do |f|
-                f.scope = scope.to_s
+                f.scope = scope.to_s if f.respond_to?(:scope)
               end
             end
             send("#{relation}=", files)

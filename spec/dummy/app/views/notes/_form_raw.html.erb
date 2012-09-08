@@ -10,15 +10,15 @@
   <br />
 
   <div class="photo">
-    <%= attachinary_file_field_tag 'note[photo_id]', note.photo_id, attachinary: note.photo_options %>
-    <div><%= note.errors[:photo_id].first %></div>
+    <%= attachinary_file_field_tag 'note[photo]', note, :photo %>
+    <div><%= note.errors[:photo].first %></div>
   </div>
 
   <br />
 
   <div class="images">
-    <%= attachinary_file_field_tag 'note[image_ids]', note.image_ids, attachinary: note.image_options %>
-    <div><%= note.errors[:image_ids].first %></div>
+    <%= attachinary_file_field_tag 'note[images]', note, :images %>
+    <div><%= note.errors[:image].first %></div>
   </div>
 
   <br />

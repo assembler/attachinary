@@ -3,7 +3,9 @@ require 'mime/types'
 module Attachinary
   module ViewHelpers
 
-    def attachinary_file_field_tag(name, value, options={})
+    def attachinary_file_field_tag(field_name, model, relation, options={})
+      options[:attachinary] = model.send("#{relation}_metadata")
+
       options[:cloudinary] ||= {}
       options[:cloudinary][:tags] ||= []
       options[:cloudinary][:tags]<< "#{Rails.env}_env"
@@ -33,15 +35,13 @@ module Attachinary
 
       options[:html][:data] ||= {}
       options[:html][:data][:attachinary] = options[:attachinary] || {}
-      options[:html][:data][:attachinary][:callback] = attachinary.callback_path
-      options[:html][:data][:attachinary][:files] = Attachinary::File.where(id: value).all #TODO: FIX
-      options[:html][:data][:attachinary][:file_field_name] = name.gsub(options[:attachinary][:field_name], options[:attachinary][:file_field_name])
-      options[:html][:data][:attachinary][:field_name] = name
+      options[:html][:data][:attachinary][:files] = [model.send(relation)].compact.flatten
+      options[:html][:data][:attachinary][:field_name] = field_name
 
       options[:html][:data][:form_data] = cloudinary_params.reject{ |k, v| v.blank? }
       options[:html][:data][:url] = cloudinary_upload_url
 
-      file_field_tag(options[:html][:data][:attachinary][:file_field_name], options[:html])
+      file_field_tag('file', options[:html])
     end
 
   end

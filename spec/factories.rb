@@ -3,7 +3,7 @@ FactoryGirl.define do
   factory :note do
     sequence(:body) { |n| "Note ##{n}"}
     after_build do |note|
-      note.photo = FactoryGirl.create(:file)
+      note.photo = FactoryGirl.build(:file)
     end
   end
 
@@ -14,7 +14,6 @@ FactoryGirl.define do
     height 600
     format 'jpg'
     resource_type 'image'
-    scope 'photo'
   end
 
 end

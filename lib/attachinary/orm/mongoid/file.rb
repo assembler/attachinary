@@ -10,5 +10,7 @@ module Attachinary
     field :height, type: Integer
     field :format, type: String
     field :resource_type, type: String
+
+    embedded_in :attachinariable, polymorphic: true
   end
 end

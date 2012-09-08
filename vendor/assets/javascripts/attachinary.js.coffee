@@ -15,7 +15,7 @@
               <img
                 src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'jpg', "crop": 'fill', "width": 75, "height": 75 }) %>"
                 alt="" width="75" height="75" />
-              <a href="#" data-remove="<%= files[i].id %>">Remove</a>
+              <a href="#" data-remove="<%= files[i].public_id %>">Remove</a>
             </li>
           <% } %>
         </ul>
@@ -55,13 +55,12 @@
       if @$input.attr('accept')
         options.acceptFileTypes = new RegExp("^#{@$input.attr('accept').split(",").join("|")}$", "i")
 
-      @$input.attr('name', 'file')
       @$input.fileupload(options)
 
 
     bindEventHandlers: ->
       @$input.bind 'fileuploaddone', (event, data) =>
-        @issueCallback(data.result)
+        setTimeout (=> @addFile(data.result)), 0 # let 'fileuploadalways' finish
 
       @$input.bind 'fileuploadstart', (event) =>
         @$input = $(event.target)  # important! changed on every file upload
@@ -72,9 +71,7 @@
         $form.addClass  'uploading'
 
         @$input.prop 'disabled', true
-
         if @config.disableWith
-          $submit.prop 'disabled', true
           $submit.data 'old-val', $submit.val()
           $submit.val  @config.disableWith
 
@@ -86,22 +83,11 @@
         $form.removeClass  'uploading'
 
         @$input.prop 'disabled', false
-
         if @config.disableWith
-          $submit.prop 'disabled', false
           $submit.val  $submit.data('old-val')
 
-
-    issueCallback: (data) ->
-      data.scope = @options.scope
-      $.ajax
-        url: @options.callback,
-        data: data,
-        success: (file) => @addFile(file)
-
     addFile: (file) ->
-      extension = file.path.split(".")[1]
-      if !@options.accept || $.inArray(extension, @options.accept) != -1
+      if !@options.accept || $.inArray(file.format, @options.accept) != -1
         @files.push file
         @redraw()
         @checkMaximum()
@@ -109,7 +95,7 @@
         alert @config.invalidFormatMessage
 
     removeFile: (fileIdToRemove) ->
-      @files = (file for file in @files when file.id.toString() != fileIdToRemove.toString())
+      @files = (file for file in @files when file.public_id != fileIdToRemove)
       @redraw()
       @checkMaximum()
 
@@ -125,11 +111,9 @@
 
     redraw: ->
       @$filesContainer.empty()
-      @$filesContainer.append @makeHiddenField(null)
 
       if @files.length > 0
-        for file in @files
-          @$filesContainer.append @makeHiddenField(file.id)
+        @$filesContainer.append @makeHiddenField(JSON.stringify(@files))
 
         @$filesContainer.append @config.render(@files)
         @$filesContainer.find('[data-remove]').on 'click', (event) =>
@@ -138,15 +122,12 @@
 
         @$filesContainer.show()
       else
+        @$filesContainer.append @makeHiddenField(null)
         @$filesContainer.hide()
 
     makeHiddenField: (value) ->
       $input = $('<input type="hidden">')
-
-      name = @options.field_name
-      name+= "[]" unless @options.single
-
-      $input.attr 'name', name
+      $input.attr 'name', @options.field_name
       $input.val value
       $input
 

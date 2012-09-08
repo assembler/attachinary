@@ -1,4 +1,5 @@
 require_relative 'file_mixin'
+require_relative 'mongoid/extension'
 require_relative 'mongoid/file'
 
-# Mongoid hook
+Mongoid::Document::ClassMethods.send :include, Attachinary::Extension

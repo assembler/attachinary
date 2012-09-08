@@ -1,19 +1,9 @@
 module Attachinary
   module FileMixin
     def self.included(base)
-      base.validates :public_id, :version, :scope, presence: true
-      base.validates :resource_type, presence: true
-      base.attr_accessible :public_id, :version, :scope, :width, :height, :format, :resource_type
+      base.validates :public_id, :version, :resource_type, presence: true
+      base.attr_accessible :public_id, :version, :width, :height, :format, :resource_type
       base.after_destroy :destroy_file
-
-      def base.upload!(file, scope)
-        if file.respond_to?(:read)
-          response = Cloudinary::Uploader.upload(file, tags: "env_#{Rails.env}")
-          params = response.slice('public_id', 'version', 'width', 'height', 'format', 'resource_type')
-          params[:scope] = scope
-          create! params
-        end
-      end
     end
 
     def as_json(options)
