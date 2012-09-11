@@ -1,6 +1,6 @@
 # Attachinary v1
 
-_Note: v1 is not backward compatible._
+_Note: v1 is not backward compatible. Refer to (wiki)[https://github.com/assembler/attachinary/wiki/Upgrading-to-v1.0] on how to upgrade._
 
 Need lightweight attachment (photos and raw files) handler for any of your model, in either has\_one or has\_many relation, without altering your models' schema and with zero effort? Attachinary is the tool for you!
 
