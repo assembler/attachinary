@@ -23,7 +23,6 @@ module Attachinary
 
 
       options[:html] ||= {}
-      options[:html][:id] = nil
       options[:html][:class] = [options[:html][:class], 'attachinary-input'].flatten.compact
 
       if !options[:html][:accept] && accepted_types = options[:attachinary][:accept]
