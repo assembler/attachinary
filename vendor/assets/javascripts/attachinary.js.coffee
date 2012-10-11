@@ -74,6 +74,7 @@
         if @config.disableWith
           $submit.data 'old-val', $submit.val()
           $submit.val  @config.disableWith
+          $submit.prop 'disabled', true
 
       @$input.bind 'fileuploadalways', (event) =>
         $form = @$input.closest('form')
@@ -85,6 +86,7 @@
         @$input.prop 'disabled', false
         if @config.disableWith
           $submit.val  $submit.data('old-val')
+          $submit.prop 'disabled', false
 
     addFile: (file) ->
       if !@options.accept || $.inArray(file.format, @options.accept) != -1
