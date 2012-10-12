@@ -26,10 +26,16 @@ module Attachinary
 
       if options[:single]
         # embeds_on :photo, ...
-        embeds_one :"#{scope}", as: :attachinariable, class_name: '::Attachinary::File'
+        embeds_one :"#{scope}",
+          as: :attachinariable,
+          class_name: '::Attachinary::File',
+          cascade_callbacks: true
       else
         # embeds_many :images, ...
-        embeds_many :"#{scope}", as: :attachinariable, class_name: '::Attachinary::File'
+        embeds_many :"#{scope}",
+          as: :attachinariable,
+          class_name: '::Attachinary::File',
+          cascade_callbacks: true
       end
 
 
