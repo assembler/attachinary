@@ -3,7 +3,17 @@ require 'mime/types'
 module Attachinary
   module ViewHelpers
 
+    def builder_attachinary_file_field_tag(attr_name, builder, options={})
+      options = attachinary_file_field_options(builder.object, attr_name, options)
+      builder.file_field(attr_name, options[:html])
+    end
+
     def attachinary_file_field_tag(field_name, model, relation, options={})
+      options = attachinary_file_field_options(model, relation, options)
+      file_field_tag(field_name, options[:html])
+    end
+
+    def attachinary_file_field_options(model, relation, options={})
       options[:attachinary] = model.send("#{relation}_metadata")
 
       options[:cloudinary] ||= {}
@@ -35,12 +45,11 @@ module Attachinary
       options[:html][:data] ||= {}
       options[:html][:data][:attachinary] = options[:attachinary] || {}
       options[:html][:data][:attachinary][:files] = [model.send(relation)].compact.flatten
-      options[:html][:data][:attachinary][:field_name] = field_name
 
       options[:html][:data][:form_data] = cloudinary_params.reject{ |k, v| v.blank? }
       options[:html][:data][:url] = cloudinary_upload_url
 
-      file_field_tag('file', options[:html])
+      options
     end
 
   end

@@ -74,6 +74,11 @@ describe 'Notes' do
       it_behaves_like "any form"
     end
 
+    context 'builder form', :js do
+      let(:path) { new_note_path(kind: 'builder') }
+      it_behaves_like "any form"
+    end
+
 
     context 'simple_form', :js do
       let(:path) { new_note_path(kind: 'simple_form') }
