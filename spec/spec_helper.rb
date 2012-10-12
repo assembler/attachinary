@@ -10,7 +10,6 @@ require "orm/#{ATTACHINARY_ORM}"
 require 'rspec/rails'
 require 'valid_attribute'
 require 'capybara/rspec'
-require 'webmock/rspec'
 
 require 'factory_girl'
 require 'factories'
@@ -37,7 +36,6 @@ RSpec.configure do |config|
 
   config.before(:each) do
     DatabaseCleaner.start
-    WebMock.disable_net_connect! allow_localhost: true
   end
 
   config.after(:each) do
