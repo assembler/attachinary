@@ -15,7 +15,6 @@ require 'factory_girl'
 require 'factories'
 
 require 'database_cleaner'
-DatabaseCleaner.strategy = :truncation
 
 
 ENGINE_RAILS_ROOT = File.join(File.dirname(__FILE__), '../')
@@ -34,12 +33,16 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   #config.include Attachinary::Engine.routes.url_helpers, type: :request
 
+  config.before(:suite) do
+    DatabaseCleaner[ATTACHINARY_ORM].strategy = :truncation
+  end
+
   config.before(:each) do
-    DatabaseCleaner.start
+    DatabaseCleaner[ATTACHINARY_ORM].start
   end
 
   config.after(:each) do
-    DatabaseCleaner.clean
+    DatabaseCleaner[ATTACHINARY_ORM].clean
   end
 
   config.after(:suite) do
