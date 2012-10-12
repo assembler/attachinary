@@ -4,9 +4,6 @@
     index: 0
     config:
       disableWith: 'Uploading...'
-      filesClass: 'attachinary_files'
-      removeLabel: 'remove'
-      removeClass: ''
       invalidFormatMessage: 'Invalid file format'
       template: """
         <ul>
