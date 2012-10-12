@@ -63,8 +63,8 @@ Lets say that we want all of our **users** to have single **avatar** and many **
 
 In our `_form.html.erb` template, we need to add only this:
 
-	<%= attachinary_file_field_tag 'user[avatar]', user, :avatar %>
-	<%= attachinary_file_field_tag 'user[photos]', user, :photos %>
+	<%= f.attachinary_file_field :avatar %>
+	<%= f.attachinary_file_field :photos %>
 
 If you're using [SimpleForm](https://github.com/plataformatec/simple_form), you can even shorten this to:
 
