@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency 'rails', '~> 3.2'
-  s.add_dependency 'cloudinary', '~> 1.0.30'
+  s.add_dependency 'cloudinary', '~> 1.0.40'
 
   # s.add_dependency "jquery-rails"
 
