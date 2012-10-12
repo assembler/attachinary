@@ -12,7 +12,7 @@ describe 'Notes' do
 
       it 'checks file type' do
         within 'div.photo' do
-          attach_file 'file', File.expand_path("../../support/A.txt", __FILE__)
+          attach_file 'note[photo]', File.expand_path("../../support/A.txt", __FILE__)
           page.driver.browser.switch_to.alert.text.downcase.should == 'invalid file format'
           page.driver.browser.switch_to.alert.accept
         end
@@ -20,23 +20,23 @@ describe 'Notes' do
 
       it 'disables input when first photo is uploaded' do
         within 'div.photo' do
-          attach_file "file", File.expand_path('../../support/A.gif', __FILE__)
+          attach_file "note[photo]", File.expand_path('../../support/A.gif', __FILE__)
           page.should have_css 'input[disabled]'
         end
       end
 
       it 'allows multiple images to be uploaded' do
         within 'div.images' do
-          attach_file "file", File.expand_path('../../support/A.gif', __FILE__)
+          attach_file "note[images]", File.expand_path('../../support/A.gif', __FILE__)
           page.should have_css 'input:not([disabled])'
-          attach_file "file", File.expand_path('../../support/B.gif', __FILE__)
+          attach_file "note[images]", File.expand_path('../../support/B.gif', __FILE__)
           page.should have_css 'input:not([disabled])'
         end
       end
 
       it 'preserves uploaded photo accross postbacks' do
         within 'div.photo' do
-          attach_file "file", File.expand_path('../../support/A.gif', __FILE__)
+          attach_file "note[photo]", File.expand_path('../../support/A.gif', __FILE__)
           page.should have_css 'img'
         end
 
@@ -57,7 +57,7 @@ describe 'Notes' do
       it 'saves the record' do
         fill_in 'note[body]', with: 'My Note'
         within 'div.photo' do
-          attach_file "file", File.expand_path('../../support/A.gif', __FILE__)
+          attach_file "note[photo]", File.expand_path('../../support/A.gif', __FILE__)
         end
         click_button 'Create Note'
 
