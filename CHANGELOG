@@ -1,3 +1,13 @@
+= Version 1.1.0
+  * BUG FIX: disabling submit key (thanks @drewmca)
+  * BUG FIX: models attachments are now removed from cloudinary
+    after model is destoyed [mongoid]
+  * ability to use form builder (`f.attachinary_file_field :avatar`)
+  * BUG FIX: proper field names and ids are generated [simple_form]
+
+= Version 1.0.1
+  * bug fix release
+
 = Version 1.0.0
   * Support for Mongoid added. You need to specify which ORM you want
     to use by explicitly requiring it.

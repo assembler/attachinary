@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    attachinary (1.0.1)
+    attachinary (1.1.0)
       cloudinary (~> 1.0.40)
       rails (~> 3.2)
 
