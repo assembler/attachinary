@@ -44,9 +44,12 @@
       @checkMaximum()
 
     initFileUpload: ->
+      @options.field_name = @$input.attr('name')
+
       options =
         maxFileSize: 10000000
         dataType: 'json'
+        paramName: 'file'
         headers: {"X-Requested-With": "XMLHttpRequest"}
 
       if @$input.attr('accept')
