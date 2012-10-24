@@ -64,6 +64,22 @@ module Attachinary
         options
       end
 
+      # def add_photo_from_url=('www.foo.com/image.jpg')
+      define_method "add_#{scope}_from_url" do |url|
+        begin
+          data = Cloudinary::Uploader.upload(url)
+        rescue => e
+          return false
+        end
+
+        file = File.new(data)
+        file.scope = scope
+        if options[:single]
+          send("#{scope}=", file)
+        else
+          send("#{scope}=", [file])
+        end
+      end
 
       # alias_method :orig_photo=, :photo=
       # def photo=(arg)
