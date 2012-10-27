@@ -4,6 +4,7 @@
     index: 0
     config:
       disableWith: 'Uploading...'
+      indicateProgress: true
       invalidFormatMessage: 'Invalid file format'
       template: """
         <ul>
@@ -39,6 +40,7 @@
 
       @$form = @$input.closest('form')
       @$submit = @$form.find('input[type=submit]')
+
       @initFileUpload()
       @addFilesContainer()
       @bindEventHandlers()
@@ -61,36 +63,39 @@
       @$input.attr('multiple', true) if @options.maximum > 1
       @$input.fileupload(options)
 
-
     bindEventHandlers: ->
-      @$input.bind 'fileuploaddone', (event, data) =>
-        setTimeout (=> @addFile(data.result)), 0 # let 'fileuploadalways' finish
-
-      @$input.bind 'fileuploadstart', (event) =>
-        @$input = $(event.target)  # important! changed on every file upload
-        $form = @$input.closest('form')
-        $submit = $form.find('input[type=submit]')
-
+      @$input.bind 'fileuploadsend', (event, data) =>
         @$input.addClass 'uploading'
-        $form.addClass  'uploading'
+        @$form.addClass  'uploading'
 
         @$input.prop 'disabled', true
         if @config.disableWith
-          $submit.data 'old-val', $submit.val()
-          $submit.val  @config.disableWith
-          $submit.prop 'disabled', true
+          @$submit.data 'old-val', @$submit.val()
+          @$submit.val  @config.disableWith
+          @$submit.prop 'disabled', true
+
+        !@maximumReached()
+
+
+      @$input.bind 'fileuploaddone', (event, data) =>
+        @addFile(data.result)
+
+
+      @$input.bind 'fileuploadstart', (event) =>
+        # important! changed on every file upload
+        @$input = $(event.target)
+
 
       @$input.bind 'fileuploadalways', (event) =>
-        $form = @$input.closest('form')
-        $submit = $form.find('input[type=submit]')
-
         @$input.removeClass 'uploading'
-        $form.removeClass  'uploading'
+        @$form.removeClass  'uploading'
 
-        @$input.prop 'disabled', false
+        @checkMaximum()
         if @config.disableWith
-          $submit.val  $submit.data('old-val')
-          $submit.prop 'disabled', false
+          @$submit.val  @$submit.data('old-val')
+          @$submit.prop 'disabled', false
+
+
 
     addFile: (file) ->
       if !@options.accept || $.inArray(file.format, @options.accept) != -1
@@ -106,10 +111,15 @@
       @checkMaximum()
 
     checkMaximum: ->
-      if @options.maximum && @files.length >= @options.maximum
+      if @maximumReached()
         @$input.prop('disabled', true)
       else
         @$input.prop('disabled', false)
+
+    maximumReached: ->
+      @options.maximum && @files.length >= @options.maximum
+
+
 
     addFilesContainer: ->
       @$filesContainer = $('<div class="attachinary_container">')
