@@ -52,6 +52,7 @@
         dataType: 'json'
         paramName: 'file'
         headers: {"X-Requested-With": "XMLHttpRequest"}
+        dropZone: @$input
 
       if @$input.attr('accept')
         options.acceptFileTypes = new RegExp("^#{@$input.attr('accept').split(",").join("|")}$", "i")
