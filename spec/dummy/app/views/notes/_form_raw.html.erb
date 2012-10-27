@@ -17,7 +17,7 @@
   <br />
 
   <div class="images">
-    <%= attachinary_file_field_tag 'note[images]', note, :images %>
+    <%= attachinary_file_field_tag 'note[images][]', note, :images %>
     <div><%= note.errors[:image].first %></div>
   </div>
 
