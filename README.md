@@ -78,7 +78,7 @@ If you're using [SimpleForm](https://github.com/plataformatec/simple_form), you 
 <%= f.input :photos, as: :attachinary %>
 ```
 
-Finally, you have to include both required javascript files. In your `application.js`, add following lines:
+Finally, you have to include necessary javascript files. In your `application.js`, add following lines:
 
 ```javascript
 //= require jquery.ui.widget
