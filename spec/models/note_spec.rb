@@ -38,6 +38,16 @@ describe Note do
         subject.photo = file.to_json
         subject.photo.public_id.should == file.public_id
       end
+
+      it 'accepts IO objects' do
+        image = StringIO.new("")
+        file = build(:file)
+
+        Cloudinary::Uploader.should_receive(:upload).with(image).and_return(file.attributes)
+
+        subject.photo = image
+        subject.photo.public_id.should == file.public_id
+      end
     end
 
     describe '#photo_url=(url)' do
@@ -93,6 +103,18 @@ describe Note do
 
         subject.images = file.to_json
         subject.images.first.public_id.should == file.public_id
+      end
+
+      it 'accepts IO objects' do
+        images = [1,2].map { StringIO.new("") }
+        files = build_list(:file, images.length)
+
+        files.each.with_index do |file, index|
+          Cloudinary::Uploader.should_receive(:upload).with(images[index]).and_return(file.attributes)
+        end
+
+        subject.images = images
+        subject.images.map(&:public_id).should =~ files.map(&:public_id)
       end
     end
 

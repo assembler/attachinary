@@ -18,6 +18,8 @@ module Attachinary
       case input
       when :blank?.to_proc
         nil
+      when lambda { |e| e.respond_to?(:read) }
+        process_hash Cloudinary::Uploader.upload(input), scope
       when String
         process_json(input, scope)
       when Hash
