@@ -42,6 +42,8 @@ module Attachinary
         options[:html][:accept] = accept.join(',') unless accept.empty?
       end
 
+      options[:html][:multiple] = true if options[:attachinary][:maximum] > 1
+
       options[:html][:data] ||= {}
       options[:html][:data][:attachinary] = options[:attachinary] || {}
       options[:html][:data][:attachinary][:files] = [model.send(relation)].compact.flatten

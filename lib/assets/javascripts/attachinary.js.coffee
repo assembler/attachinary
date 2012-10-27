@@ -60,7 +60,6 @@
       if @$input.attr('accept')
         options.acceptFileTypes = new RegExp("^#{@$input.attr('accept').split(",").join("|")}$", "i")
 
-      @$input.attr('multiple', true) if @options.maximum > 1
       @$input.fileupload(options)
 
     bindEventHandlers: ->
