@@ -22,7 +22,7 @@ module Attachinary
       # alias_method :orig_photo=, :photo=
       # def photo=(input)
       #   input = Attachinary::Utils.process_input(input)
-      #   if input.blank?
+      #   if input.nil?
       #     self.orig_photo = nil
       #   else
       #     files = [input].flatten
@@ -33,7 +33,7 @@ module Attachinary
       alias_method "orig_#{options[:scope]}=", "#{options[:scope]}="
       define_method "#{options[:scope]}=" do |input|
         input = Attachinary::Utils.process_input(input)
-        if input.blank?
+        if input.nil?
           send("orig_#{options[:scope]}=", nil)
         else
           files = [input].flatten

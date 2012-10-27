@@ -12,7 +12,7 @@ module Attachinary
     def self.process_input(input, scope=nil)
       case input
       when :blank?.to_proc
-        input
+        nil
       when String
         parse_json(input, scope)
       when Array

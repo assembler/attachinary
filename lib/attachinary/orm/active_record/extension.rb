@@ -27,7 +27,7 @@ module Attachinary
       # end
       define_method "#{options[:scope]}=" do |input|
         input = Attachinary::Utils.process_input(input, options[:scope])
-        if input.blank?
+        if input.nil?
           send("#{relation}").clear
         else
           files = [input].flatten
