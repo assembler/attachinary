@@ -16,12 +16,16 @@ require 'factories'
 
 require 'database_cleaner'
 
+require "capybara/webkit"
+Capybara.javascript_driver = :webkit
+
 
 ENGINE_RAILS_ROOT = File.join(File.dirname(__FILE__), '../')
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[File.join(ENGINE_RAILS_ROOT, "spec/support/**/*.rb")].each {|f| require f }
+
 
 
 RSpec.configure do |config|
@@ -31,7 +35,7 @@ RSpec.configure do |config|
 
   config.use_transactional_fixtures = false
   config.include FactoryGirl::Syntax::Methods
-  #config.include Attachinary::Engine.routes.url_helpers, type: :request
+  config.include RequestHelpers, type: :request
 
   config.before(:suite) do
     DatabaseCleaner[ATTACHINARY_ORM].strategy = :truncation

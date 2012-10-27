@@ -12,9 +12,15 @@ describe 'Notes' do
 
       it 'checks file type' do
         within 'div.photo' do
-          attach_file 'note[photo]', File.expand_path("../../support/A.txt", __FILE__)
-          page.driver.browser.switch_to.alert.text.downcase.should == 'invalid file format'
-          page.driver.browser.switch_to.alert.accept
+          handle_alert do |message|
+            attach_file 'note[photo]', File.expand_path("../../support/A.txt", __FILE__)
+            Timeout::timeout(5) do
+              begin
+                sleep 0.250
+              end while alert_message.blank?
+              alert_message.downcase.should == 'invalid file format'
+            end
+          end
         end
       end
 
