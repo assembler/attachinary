@@ -124,6 +124,17 @@ Avatar will be automatically cropped to 50x50px to show only user face. You read
 Whenever you feel like changing image sizes, you don't need to set rake task that will take forever to re-process thousands of photos. You just change the dimension in your partial and thats it.
 
 
+### Additional methods
+
+```ruby
+# uploading avatar by passing url
+user.avatar_url = "http://path/to/avatar.jpg"
+
+# uploading photos by passing multiple urls
+user.photo_urls = %w[ http://path/to/photo1.jpg http://path/to/photo2.jpg]
+```
+
+
 ## Conventions
 
 * always use singular identifier after `has_attachment` (e.g. `has_attachment :photo`)
