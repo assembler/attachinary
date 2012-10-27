@@ -3,7 +3,7 @@ module Attachinary
 
     def self.process_json(json, scope=nil)
       [JSON.parse(json)].flatten.map do |data|
-        process_hash(data)
+        process_hash(data, scope)
       end
     end
 
@@ -23,7 +23,7 @@ module Attachinary
       when Hash
         process_hash(input, scope)
       when Array
-        input.map { |el| process_input(el) }
+        input.map { |el| process_input(el, scope) }
       else
         input
       end
