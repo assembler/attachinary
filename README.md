@@ -14,6 +14,7 @@ Why is Attachinary different:
 * **Files are uploaded directly to Cloudinary** completely bypassing your app (without affecting its performance).
 * **Very easy to use**. Once set up, 1 line is enough to add attachment support to your model. **No migrations, no Uploaders**.
 * **Lightweight form submission**. Attachinary handles file upload asynchronously and the only thing that is passed to your server is metadata. That makes form postbacks fast and reliable.
+* Benefits of [jQuery File Upload](https://github.com/blueimp/jQuery-File-Upload/) (**drag'n'drop**, **selecting multiple files**, **progress indicators**.. etc)
 * All the [benefits of Cloudinary](http://cloudinary.com/documentation/image_transformations) (resizing, cropping, rotating, rounding corners, **face detection**...).
 
 Attachinary uses [Cloudinary](http://cloudinary.com) service. Gem is structured as mountable rails engine.
@@ -52,35 +53,52 @@ Finally, make sure that you have following line in head section of your applicat
 
 Lets say that we want all of our **users** to have single **avatar** and many **photos** in their gallery. We also want *avatar* to be required. We also want to limit the number of photos user can upload to 10. We can declare it like this:
 
-	class User < ActiveRecord::Base
-		...
-		has_attachment  :avatar, accept: [:jpg, :png, :gif]
-		has_attachments :photos, maximum: 10
+```ruby
+class User < ActiveRecord::Base
+	...
+	has_attachment  :avatar, accept: [:jpg, :png, :gif]
+	has_attachments :photos, maximum: 10
 
-		validates :avatar, presence: true
-		...
-	end
+	validates :avatar, presence: true
+	# ...
+end
+```
 
 In our `_form.html.erb` template, we need to add only this:
 
-	<%= f.attachinary_file_field :avatar %>
-	<%= f.attachinary_file_field :photos %>
+```erb
+<%= f.attachinary_file_field :avatar %>
+<%= f.attachinary_file_field :photos %>
+```
 
 If you're using [SimpleForm](https://github.com/plataformatec/simple_form), you can even shorten this to:
 
-	<%= f.input :avatar, as: :attachinary %>
-	<%= f.input :photos, as: :attachinary %>
+```erb
+<%= f.input :avatar, as: :attachinary %>
+<%= f.input :photos, as: :attachinary %>
+```
 
-Finally, you have to include both `cloudinary` and `attachinary` into your asset pipeline. In your `application.js`, add following lines:
+Finally, you have to include both required javascript files. In your `application.js`, add following lines:
 
-	...
-	//= require cloudinary
-	//= require attachinary
-	...
+```javascript
+//= require jquery.ui.widget
+//= require jquery.iframe-transport
+//= require jquery.fileupload
+//= require cloudinary/jquery.cloudinary
+//= require attachinary
+```
+
+If you don't have the jQuery File Upload files, you can use following rake task to fetch (or update) them:
+
+```
+rake attachinary:fetch_fileupload
+```
 
 And, add this code on document ready:
 
-	$('.attachinary-input').attachinary()
+```javascript
+$('.attachinary-input').attachinary()
+```
 
 Attachinary jquery plugin is based upon [jQuery File Upload plugin](https://github.com/blueimp/jQuery-File-Upload) but without any fancy UI (it leaves it up to you to decorate it).
 
@@ -91,13 +109,15 @@ Plugin is fully customizable. It uses John Resig's micro templating in the backg
 
 Here comes the good part. There is no need to transform images on your server. Instead, you can request image transformations directly from Cloudinary. First time you request image, it is created and cached on the Cloudinary server for later use. Here is sample code that you can use in your `_user.html.erb` partial:
 
-	<% if @user.avatar? %>
-		<%= cl_image_tag(@user.avatar.path, { size: '50x50', crop: :face }) %>
-	<% end %>
+```erb
+<% if @user.avatar? %>
+	<%= cl_image_tag(@user.avatar.path, { size: '50x50', crop: :fit, gravity: :face }) %>
+<% end %>
 
-	<% @user.photos.each do |photo| %>
-		<%= cl_image_tag(photo.path, { size: '125x125', crop: :fit }) %>
-	<% end %>
+<% @user.photos.each do |photo| %>
+	<%= cl_image_tag(photo.path, { size: '125x125', crop: :fit }) %>
+<% end %>
+```
 
 Avatar will be automatically cropped to 50x50px to show only user face. You read it right: **face detection** :) All other user photos are just cropped to fit within 125x125.
 
@@ -108,7 +128,7 @@ Whenever you feel like changing image sizes, you don't need to set rake task tha
 
 * always use singular identifier after `has_attachment` (e.g. `has_attachment :photo`)
 * always use plural identifier after `has_attachments` (e.g. `has_attachments :images`)
-* you can't use colliding identifiers (e.g. `has_attachment :photo` and `has_attachments :photos`) on same model.
+* do not use colliding identifiers (e.g. `has_attachment :photo` and `has_attachments :photos`) on same model.
 
 
 ## Requirements and Compatibility
