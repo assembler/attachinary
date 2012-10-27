@@ -1,3 +1,5 @@
+require 'attachinary/utils'
+
 module Attachinary
   module Extension
     include Base
@@ -18,28 +20,24 @@ module Attachinary
       end
 
       # alias_method :orig_photo=, :photo=
-      # def photo=(arg)
-      #   arg = nil if arg.empty?
-      #   if arg.is_a?(String)
-      #     files = ... parse JSON and MAP to array of Attachinary::File ..
-      #     files = files[0] if options[:singular]
-      #     super files
+      # def photo=(input)
+      #   input = Attachinary::Utils.process_input(input)
+      #   if input.blank?
+      #     self.orig_photo = nil
       #   else
-      #     super
+      #     files = [input].flatten
+      #     self.orig_photo = options[:single] ? files[0] : files
       #   end
       # end
+      # end
       alias_method "orig_#{options[:scope]}=", "#{options[:scope]}="
-      define_method "#{options[:scope]}=" do |arg|
-        arg = nil if arg.respond_to?(:empty?) && arg.empty?
-
-        if arg.is_a?(String)
-          files = [JSON.parse(arg)].flatten.map do |data|
-            data = data.slice(*Attachinary::File.attr_accessible[:default].to_a)
-            Attachinary::File.new(data)
-          end
-          send("orig_#{options[:scope]}=", options[:single] ? files[0] : files)
+      define_method "#{options[:scope]}=" do |input|
+        input = Attachinary::Utils.process_input(input)
+        if input.blank?
+          send("orig_#{options[:scope]}=", nil)
         else
-          send("orig_#{options[:scope]}=", arg)
+          files = [input].flatten
+          send("orig_#{options[:scope]}=", options[:single] ? files[0] : files)
         end
       end
     end

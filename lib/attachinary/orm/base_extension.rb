@@ -1,3 +1,5 @@
+require 'attachinary/utils'
+
 module Attachinary
   module Extension
     module Base
@@ -12,7 +14,7 @@ module Attachinary
 
     private
       def attachinary(options)
-        options = attachinary_process_options(options)
+        options = Attachinary::Utils.process_options(options)
 
         attachinary_orm_definition(options)
 
@@ -36,23 +38,7 @@ module Attachinary
         define_method :"#{options[:scope]}_metadata" do
           options
         end
-      end
 
-      def attachinary_process_options(options)
-        options.reverse_merge!({
-          accessible: true
-        })
-        options[:maximum] = 1 if options[:single]
-
-        if options[:single]
-          options[:singular] = options[:scope].to_s
-          options[:plural] = options[:scope].to_s.pluralize
-        else
-          options[:plural] = options[:scope].to_s
-          options[:singular] = options[:scope].to_s.singularize
-        end
-
-        options
       end
 
     end
