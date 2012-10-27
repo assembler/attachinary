@@ -42,7 +42,7 @@ module Attachinary
         options[:html][:accept] = accept.join(',') unless accept.empty?
       end
 
-      options[:html][:multiple] = true if options[:attachinary][:maximum] > 1
+      options[:html][:multiple] = true unless options[:attachinary][:single]
 
       options[:html][:data] ||= {}
       options[:html][:data][:attachinary] = options[:attachinary] || {}
