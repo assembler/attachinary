@@ -33,9 +33,9 @@ describe 'Notes' do
 
       it 'allows multiple images to be uploaded' do
         within 'div.images' do
-          attach_file "note[images]", File.expand_path('../../support/A.gif', __FILE__)
+          attach_file "note[images][]", File.expand_path('../../support/A.gif', __FILE__)
           page.should have_css 'input:not([disabled])'
-          attach_file "note[images]", File.expand_path('../../support/B.gif', __FILE__)
+          attach_file "note[images][]", File.expand_path('../../support/B.gif', __FILE__)
           page.should have_css 'input:not([disabled])'
         end
       end
