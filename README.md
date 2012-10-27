@@ -132,6 +132,12 @@ user.avatar_url = "http://path/to/avatar.jpg"
 
 # uploading photos by passing multiple urls
 user.photo_urls = %w[ http://path/to/photo1.jpg http://path/to/photo2.jpg]
+
+# uploading by passing IO object (e.g. direct file upload)
+user.avatar = File.open("/path/to/file", 'r')
+```
+
+
 ### No-JS usage
 
 If you don't want fancy JS features, all you have to do is just switch to `:input` file field:
