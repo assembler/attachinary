@@ -1,20 +1,27 @@
 module Attachinary
   module Utils
 
-    def self.parse_json(json, scope=nil)
+    def self.process_json(json, scope=nil)
       [JSON.parse(json)].flatten.map do |data|
-        file = Attachinary::File.new data.slice(*Attachinary::File.attr_accessible[:default].to_a)
-        file.scope = scope.to_s if scope
-        file
+        process_hash(data)
       end
     end
+
+    def self.process_hash(hash, scope=nil)
+      file = Attachinary::File.new hash.slice(*Attachinary::File.attr_accessible[:default].to_a)
+      file.scope = scope.to_s if scope && file.respond_to?(:scope=)
+      file
+    end
+
 
     def self.process_input(input, scope=nil)
       case input
       when :blank?.to_proc
         nil
       when String
-        parse_json(input, scope)
+        process_json(input, scope)
+      when Hash
+        process_hash(input, scope)
       when Array
         input.map { |el| process_input(el) }
       else
