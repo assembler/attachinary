@@ -1,3 +1,12 @@
+= Version 1.2.0
+  * Drag and drop support (on supported browsers)
+  * Selecting multiple files (on supported browsers)
+  * Upload progress indicator (prepended on submit button)
+  * Rake task for fetching assets (`rake attachinary:fetch_fileupload`)
+  * Ability to assing image urls (e.g. `user.avatar_url = 'http://..'`)
+  * Ability to assign IO objects (e.g. `user.avatar = File.open(...)`)
+  * No-JS support
+
 = Version 1.1.0
   * BUG FIX: disabling submit key (thanks @drewmca)
   * BUG FIX: models attachments are now removed from cloudinary
