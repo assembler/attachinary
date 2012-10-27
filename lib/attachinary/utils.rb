@@ -25,7 +25,9 @@ module Attachinary
       when Hash
         process_hash(input, scope)
       when Array
-        input.map { |el| process_input(el, scope) }
+        input = input.map{ |el| process_input(el, scope) }.flatten.compact
+        input = nil if input.empty?
+        input
       else
         input
       end
