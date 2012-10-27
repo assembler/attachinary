@@ -40,6 +40,21 @@ describe Note do
       end
     end
 
+    describe '#photo_url=(url)' do
+      let(:url) { "http://placehold.it/100x100" }
+      let(:file) { build(:file) }
+      let(:json) { file.attributes.to_json }
+
+      before do
+        Cloudinary::Uploader.should_receive(:upload).with(url).and_return(json)
+      end
+
+      it 'uploads photo via url' do
+        subject.photo_url = url
+        subject.photo.public_id.should == file.public_id
+      end
+    end
+
     describe '#photo?' do
       it 'checks whether photo is present' do
         subject.photo?.should be_true
@@ -78,6 +93,22 @@ describe Note do
 
         subject.images = file.to_json
         subject.images.first.public_id.should == file.public_id
+      end
+    end
+
+    describe '#image_urls=(urls)' do
+      let(:urls) { %w[ 1 2 3 ] }
+      let(:files) { build_list(:file, urls.length) }
+
+      before do
+        files.each.with_index do |file, index|
+          Cloudinary::Uploader.should_receive(:upload).with(urls[index]).and_return(file.attributes)
+        end
+      end
+
+      it 'upload photos via urls' do
+        subject.image_urls = urls
+        subject.images.map(&:public_id).should =~ files.map(&:public_id)
       end
     end
 

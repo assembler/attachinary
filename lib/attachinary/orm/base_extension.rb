@@ -39,6 +39,23 @@ module Attachinary
           options
         end
 
+        if options[:single]
+          # def photo_url=(url)
+          #   ...
+          # end
+          define_method :"#{options[:scope]}_url=" do |url|
+            send(:"#{options[:scope]}=", Cloudinary::Uploader.upload(url))
+          end
+
+        else
+          # def image_urls=(urls)
+          #   ...
+          # end
+          define_method :"#{options[:singular]}_urls=" do |urls|
+            send(:"#{options[:scope]}=", urls.map { |url| Cloudinary::Uploader.upload(url) })
+          end
+        end
+
       end
 
     end
