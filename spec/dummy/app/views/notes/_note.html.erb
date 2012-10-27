@@ -1,8 +1,12 @@
 <div style="float:left; width: 150px;">
   <% if note.photo? %>
     <%= cl_image_tag note.photo.path,
-      size: '120x120', crop: :fill, html_width: nil, html_height: nil %>
-  <% end %>
+      size: '120x120', crop: :fill, html_width: nil, html_height: nil %> <br />
+
+    <% note.images.each do |image| %>
+      <%= cl_image_tag image.path, size: '37x37', crop: :fill, html_width: nil, html_height: nil %>
+    <% end %>
+  <% end %><br />
   <%= note.body %><br />
   <%= link_to 'edit (raw)', edit_note_path(note, kind: 'raw') %><br />
   <%= link_to 'edit (builder)', edit_note_path(note, kind: 'builder') %><br />
