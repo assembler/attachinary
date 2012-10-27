@@ -37,6 +37,8 @@
       @options = @$input.data('attachinary')
       @files = @options.files
 
+      @$form = @$input.closest('form')
+      @$submit = @$form.find('input[type=submit]')
       @initFileUpload()
       @addFilesContainer()
       @bindEventHandlers()
