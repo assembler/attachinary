@@ -132,6 +132,13 @@ user.avatar_url = "http://path/to/avatar.jpg"
 
 # uploading photos by passing multiple urls
 user.photo_urls = %w[ http://path/to/photo1.jpg http://path/to/photo2.jpg]
+### No-JS usage
+
+If you don't want fancy JS features, all you have to do is just switch to `:input` file field:
+
+```erb
+<%= f.input :photo, as: :file %>
+<%= f.input :images, as: :file, input_html: { multiple: true } %>
 ```
 
 
