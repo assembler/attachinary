@@ -96,6 +96,11 @@
           @$submit.prop 'disabled', false
 
 
+      @$input.bind 'fileuploadprogressall', (e, data) =>
+        progress = parseInt(data.loaded / data.total * 100, 10)
+        if @config.disableWith && @config.indicateProgress
+          @$submit.val "[#{progress}%] #{@config.disableWith}"
+
 
     addFile: (file) ->
       if !@options.accept || $.inArray(file.format, @options.accept) != -1
