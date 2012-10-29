@@ -51,16 +51,14 @@ RSpec.configure do |config|
 
   config.after(:suite) do
     print "\n\n Cleaning up uploaded files"
+
     begin
-      begin
-        print "."
-        ids = Cloudinary::Api.resources_by_tag('test_env', max_results: 100)["resources"].map{|r| r["public_id"] }
-        Cloudinary::Api.delete_resources(ids) unless ids.empty?
-      end until ids.empty?
+      Cloudinary::Api.delete_resources_by_tag('test_env')
       print " (done)"
     rescue Cloudinary::Api::RateLimited => e
       print " (#{e.message})"
     end
+
     print "\n\n"
   end
 end

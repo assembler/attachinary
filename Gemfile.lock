@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     attachinary (1.2.0)
-      cloudinary (~> 1.0.40)
+      cloudinary (~> 1.0.41)
       rails (~> 3.2)
 
 GEM
@@ -51,7 +51,7 @@ GEM
       json
     childprocess (0.3.5)
       ffi (~> 1.0, >= 1.0.6)
-    cloudinary (1.0.40)
+    cloudinary (1.0.41)
       aws_cf_signer
       rest-client
     coffee-rails (3.2.2)
