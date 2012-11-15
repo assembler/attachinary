@@ -1,3 +1,6 @@
+= Version 1.2.1
+  * bugfix: already uploaded image gets deleted from cloudinary when updating model [#29]
+
 = Version 1.2.0
   * Drag and drop support (on supported browsers)
   * Selecting multiple files (on supported browsers)
