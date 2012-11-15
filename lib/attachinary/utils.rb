@@ -8,9 +8,13 @@ module Attachinary
     end
 
     def self.process_hash(hash, scope=nil)
-      file = Attachinary::File.new hash.slice(*Attachinary::File.attr_accessible[:default].to_a)
-      file.scope = scope.to_s if scope && file.respond_to?(:scope=)
-      file
+      if hash['id']
+        Attachinary::File.find hash['id']
+      else
+        file = Attachinary::File.new hash.slice(*Attachinary::File.attr_accessible[:default].to_a)
+        file.scope = scope.to_s if scope && file.respond_to?(:scope=)
+        file
+      end
     end
 
 
