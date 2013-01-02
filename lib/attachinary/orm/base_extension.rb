@@ -44,7 +44,7 @@ module Attachinary
           #   ...
           # end
           define_method :"#{options[:scope]}_url=" do |url|
-            send(:"#{options[:scope]}=", Cloudinary::Uploader.upload(url))
+            send(:"#{options[:scope]}=", Cloudinary::Uploader.upload(url, resource_type: "auto"))
           end
 
         else
@@ -52,7 +52,7 @@ module Attachinary
           #   ...
           # end
           define_method :"#{options[:singular]}_urls=" do |urls|
-            send(:"#{options[:scope]}=", urls.map { |url| Cloudinary::Uploader.upload(url) })
+            send(:"#{options[:scope]}=", urls.map { |url| Cloudinary::Uploader.upload(url, resource_type: "auto") })
           end
         end
 
