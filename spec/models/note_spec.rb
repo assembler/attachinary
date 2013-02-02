@@ -8,16 +8,6 @@ describe Note do
     it { should_not have_valid(:photo).when(nil) }
   end
 
-  describe "callbacks" do
-    describe "after_destroy" do
-      subject { create(:note) }
-      it "destroys attached files" do
-        Cloudinary::Uploader.should_receive(:destroy).with(subject.photo.public_id)
-        subject.destroy
-      end
-    end
-  end
-
   describe 'photo attachment' do
     describe '#photo' do
       it 'manages photo' do

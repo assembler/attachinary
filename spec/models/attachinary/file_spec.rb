@@ -10,6 +10,24 @@ describe Attachinary::File do
     it { should_not have_valid(:resource_type).when(nil) }
   end
 
+  describe "callbacks" do
+    describe "after_destroy" do
+      subject { create(:file) }
+      it "destroys attached files" do
+        Cloudinary::Uploader.should_receive(:destroy).with(subject.public_id)
+        subject.destroy
+      end
+    end
+
+    describe "after_create" do
+      subject { build(:file, public_id: 'test:id') }
+      it "removes attachinary_tmp tag from files" do
+        Cloudinary::Uploader.should_receive(:remove_tag).with(Attachinary::TMPTAG, ['test:id'])
+        subject.save!
+      end
+    end
+  end
+
   describe '#path(custom_format=nil)' do
     context "image resource_type" do
       subject { build(:file, public_id: 'id', version: '1', format: 'jpg', resource_type: 'image') }
