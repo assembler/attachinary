@@ -46,6 +46,7 @@ describe 'Notes' do
           page.should have_css 'img'
         end
 
+        page.should have_button 'Create Note' # wait for it to appear
         click_button 'Create Note'
 
         within 'div.photo' do
