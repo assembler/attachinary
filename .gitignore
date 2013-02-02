@@ -8,3 +8,5 @@ spec/dummy/tmp/
 spec/dummy/.sass-cache
 spec/dummy/config/cloudinary.yml
 bin/
+
+.rspec
