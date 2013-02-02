@@ -10,20 +10,20 @@ describe Note do
 
 
   describe "callbacks" do
-    let(:note) { build(:note) }
-    subject { note.photo }
+    let(:photo) { build(:file) }
 
     describe "after_destroy" do
       it "destroys attached files" do
-        Cloudinary::Uploader.should_receive(:destroy).with(subject.public_id)
-        subject.destroy
+        note = create(:note, photo: photo)
+        Cloudinary::Uploader.should_receive(:destroy).with(photo.public_id)
+        note.destroy
       end
     end
 
     describe "after_create" do
       it "removes attachinary_tmp tag from files" do
-        Cloudinary::Uploader.should_receive(:remove_tag).with(Attachinary::TMPTAG, [subject.public_id])
-        subject.save!
+        Cloudinary::Uploader.should_receive(:remove_tag).with(Attachinary::TMPTAG, [photo.public_id])
+        create(:note, photo: photo)
       end
     end
   end

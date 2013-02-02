@@ -3,7 +3,7 @@ FactoryGirl.define do
   factory :note do
     sequence(:body) { |n| "Note ##{n}"}
     after(:build) do |note|
-      note.photo = FactoryGirl.build(:file)
+      note.photo ||= FactoryGirl.build(:file)
     end
   end
 
