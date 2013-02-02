@@ -23,7 +23,7 @@ module Attachinary
       when :blank?.to_proc
         nil
       when lambda { |e| e.respond_to?(:read) }
-        process_hash Cloudinary::Uploader.upload(input), scope
+        process_hash Cloudinary::Uploader.upload(input, resource_type: 'auto'), scope
       when String
         process_json(input, scope)
       when Hash
