@@ -29,5 +29,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'factory_girl_rails', '~> 3.0'
   s.add_development_dependency 'launchy'
   s.add_development_dependency 'database_cleaner'
+  s.add_development_dependency 'rb-fsevent', '~> 0.9.1'
   s.add_development_dependency 'guard-rspec'
 end
