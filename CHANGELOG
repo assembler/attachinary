@@ -1,3 +1,8 @@
+= Version 1.2.2
+  * Ability to cleanup unused files:
+    files are automatically tagged with `attachinary_tmp` during upload, and
+    untagged when saved in local database.
+
 = Version 1.2.1
   * bugfix: already uploaded image gets deleted from cloudinary when updating model [#29]
 
