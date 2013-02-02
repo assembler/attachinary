@@ -51,7 +51,7 @@ GEM
       json
     childprocess (0.3.6)
       ffi (~> 1.0, >= 1.0.6)
-    cloudinary (1.0.42)
+    cloudinary (1.0.43)
       aws_cf_signer
       rest-client
     coderay (1.0.8)
