@@ -66,6 +66,12 @@ class User < ActiveRecord::Base
 end
 ```
 
+The `has_attachments` methods support some options. Notably, you can support ordered images by adding a `position` column to the `attachinary_files` table and doing this:
+
+```ruby
+  has_attachments :photos, order: 'position ASC'
+```
+
 In our `_form.html.erb` template, we need to add only this:
 
 ```erb
