@@ -11,7 +11,8 @@ module Attachinary
       if hash['id']
         Attachinary::File.find hash['id']
       else
-        file = Attachinary::File.new hash.slice(*Attachinary::File.attr_accessible[:default].to_a)
+        permitted_params = [:public_id, :version, :width, :height, :format, :resource_type]
+        file = Attachinary::File.new hash.select {|k,v| permitted_params.include?(:"#{k}") }
         file.scope = scope.to_s if scope && file.respond_to?(:scope=)
         file
       end
