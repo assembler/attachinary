@@ -45,13 +45,9 @@ module Attachinary
 
       options[:html][:multiple] = true unless options[:attachinary][:single]
 
-      Rails.logger.info(model.inspect)
-
       options[:html][:data] ||= {}
       options[:html][:data][:attachinary] = options[:attachinary] || {}
       options[:html][:data][:attachinary][:files] = [model.send(relation)].compact.flatten
-
-      Rails.logger.info(options[:html][:data][:attachinary][:files].inspect)
 
       options[:html][:data][:form_data] = cloudinary_params.reject{ |k, v| v.blank? }
       options[:html][:data][:url] = cloudinary_upload_url
