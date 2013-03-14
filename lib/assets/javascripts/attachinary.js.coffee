@@ -139,6 +139,7 @@
         @$filesContainer.find('[data-remove]').on 'click', (event) =>
           event.preventDefault()
           @removeFile $(event.target).data('remove')
+          @$input.trigger("fileremoved")
 
         @$filesContainer.show()
       else
