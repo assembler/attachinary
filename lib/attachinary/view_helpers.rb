@@ -20,6 +20,7 @@ module Attachinary
       options[:cloudinary][:tags] ||= []
       options[:cloudinary][:tags]<< "#{Rails.env}_env"
       options[:cloudinary][:tags]<< Attachinary::TMPTAG
+      options[:cloudinary][:tags].uniq!
 
       cloudinary_upload_url = Cloudinary::Utils.cloudinary_api_url("upload",
         {:resource_type=>:auto}.merge(options[:cloudinary]))
