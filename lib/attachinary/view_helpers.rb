@@ -16,7 +16,7 @@ module Attachinary
     def attachinary_file_field_options(model, relation, options={})
       options[:attachinary] = model.send("#{relation}_metadata")
 
-      options[:cloudinary] ||= {}
+      options[:cloudinary] ||= options[:attachinary][:cloudinary] || {}
       options[:cloudinary][:tags] ||= []
       options[:cloudinary][:tags]<< "#{Rails.env}_env"
       options[:cloudinary][:tags]<< Attachinary::TMPTAG
