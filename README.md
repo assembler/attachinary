@@ -66,6 +66,20 @@ class User < ActiveRecord::Base
 end
 ```
 
+The `has_attachments` methods support some options. Notably, you can support ordered images by adding a `position` column to the `attachinary_files` table and doing this:
+
+```ruby
+  has_attachments :photos, order: 'position ASC'
+```
+
+You can also pass in options to the cloudinary upload API, such as base transformations and eager transformations:
+
+```ruby
+  has_attachments :photos, cloudinary: { eager: [...], transformation: {...} }
+```
+
+These options are passed through to the upload form and passed directly to cloudinary. Learn more at the [Cloudinary API Docs](http://cloudinary.com/documentation/upload_images)
+
 In our `_form.html.erb` template, we need to add only this:
 
 ```erb

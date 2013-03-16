@@ -55,7 +55,7 @@
         paramName: 'file'
         headers: {"X-Requested-With": "XMLHttpRequest"}
         dropZone: @$input
-        sequentialUploads: true
+        sequentialUploads: false
 
       if @$input.attr('accept')
         options.acceptFileTypes = new RegExp("^#{@$input.attr('accept').split(",").join("|")}$", "i")
@@ -139,6 +139,7 @@
         @$filesContainer.find('[data-remove]').on 'click', (event) =>
           event.preventDefault()
           @removeFile $(event.target).data('remove')
+          @$input.trigger("fileremoved")
 
         @$filesContainer.show()
       else
