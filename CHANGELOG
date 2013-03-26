@@ -1,3 +1,7 @@
+= Version 1.2.3
+  * Fixed bug with multiple submit buttons in one form (Benjamin Seibert)
+  * IE content-type fix (Yan Pritzker)
+
 = Version 1.2.2
   * Ability to cleanup unused files:
     files are automatically tagged with `attachinary_tmp` during upload, and
