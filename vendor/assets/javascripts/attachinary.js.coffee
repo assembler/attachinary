@@ -48,9 +48,11 @@
 
     initFileUpload: ->
       options =
-        maxFileSize: 10000000
+        maxFileSize: @config.maxFileSize || 10000000
         dataType: 'json'
         headers: {"X-Requested-With": "XMLHttpRequest"}
+        dropZone: @config.dropZone || @$input
+        
 
       if @$input.attr('accept')
         options.acceptFileTypes = new RegExp("^#{@$input.attr('accept').split(",").join("|")}$", "i")
