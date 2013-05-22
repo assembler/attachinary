@@ -69,7 +69,9 @@
 
         @$input.prop 'disabled', true
         if @config.disableWith
-          @$submit.data 'old-val', @$submit.val()
+          @$submit.each (index,input) =>
+            $input = $(input)
+            $input.data 'old-val', $input.val()
           @$submit.val  @config.disableWith
           @$submit.prop 'disabled', true
 
@@ -91,7 +93,9 @@
 
         @checkMaximum()
         if @config.disableWith
-          @$submit.val  @$submit.data('old-val')
+          @$submit.each (index,input) =>
+            $input = $(input)
+            $input.val  $input.data('old-val')
           @$submit.prop 'disabled', false
 
 
