@@ -2,7 +2,7 @@ module Attachinary
   module Utils
 
     def self.process_json(json, scope=nil)
-      [JSON.parse(json)].flatten.map do |data|
+      [JSON.parse(json)].flatten.compact.map do |data|
         process_hash(data, scope)
       end
     end
