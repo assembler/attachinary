@@ -49,6 +49,12 @@ describe Note do
         subject.photo.public_id.should == file.public_id
       end
 
+      it 'handles invalid JSON from bad browsers (IE)' do
+        file = build(:file)
+        subject.photo = "[null]"
+        subject.photo.should be_nil
+      end
+
       it 'accepts IO objects' do
         image = StringIO.new("")
         file = build(:file)
