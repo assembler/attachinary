@@ -54,7 +54,7 @@
         dataType: 'json'
         paramName: 'file'
         headers: {"X-Requested-With": "XMLHttpRequest"}
-        dropZone: @$input
+        dropZone: @config.dropZone || @$input
         sequentialUploads: true
 
       if @$input.attr('accept')
