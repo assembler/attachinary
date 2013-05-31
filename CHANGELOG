@@ -1,3 +1,6 @@
+= Version 1.2.5
+  * BUG FIX: Default jQuery plugin options mutation
+
 = Version 1.2.4
   * Ability to specify custom dropzone via config (drewmca)
   * BUG FIX: Bad browsers (IE) can put '[null]' into the attachinary hash (Yan Pritzker)
