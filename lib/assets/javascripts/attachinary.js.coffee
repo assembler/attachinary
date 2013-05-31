@@ -23,7 +23,7 @@
 
 
   $.fn.attachinary = (options) ->
-    settings = $.extend $.attachinary.config, options
+    settings = $.extend {}, $.attachinary.config, options
 
     this.each ->
       $this = $(this)
