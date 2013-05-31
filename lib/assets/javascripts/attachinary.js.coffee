@@ -23,7 +23,7 @@
 
 
   $.fn.attachinary = (options) ->
-    settings = $.extend $.attachinary.config, options
+    settings = $.extend {}, $.attachinary.config, options
 
     this.each ->
       $this = $(this)
@@ -54,8 +54,8 @@
         dataType: 'json'
         paramName: 'file'
         headers: {"X-Requested-With": "XMLHttpRequest"}
-        dropZone: @$input
-        sequentialUploads: false
+        dropZone: @config.dropZone || @$input
+        sequentialUploads: true
 
       if @$input.attr('accept')
         options.acceptFileTypes = new RegExp("^#{@$input.attr('accept').split(",").join("|")}$", "i")
