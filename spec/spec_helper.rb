@@ -35,7 +35,7 @@ RSpec.configure do |config|
 
   config.use_transactional_fixtures = false
   config.include FactoryGirl::Syntax::Methods
-  config.include RequestHelpers, type: :request
+  config.include RequestHelpers, type: :feature
 
   config.before(:suite) do
     DatabaseCleaner[ATTACHINARY_ORM].strategy = :truncation
