@@ -1,3 +1,6 @@
+= Version 1.2.6
+  * Added "attachinary:fileadded" and "attachinary:fileremoved" js events
+
 = Version 1.2.5
   * BUG FIX: Default jQuery plugin options mutation
 

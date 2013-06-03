@@ -110,13 +110,22 @@
         @files.push file
         @redraw()
         @checkMaximum()
+        @$input.trigger 'attachinary:fileadded', [file]
       else
         alert @config.invalidFormatMessage
 
     removeFile: (fileIdToRemove) ->
-      @files = (file for file in @files when file.public_id != fileIdToRemove)
+      _files = []
+      removedFile = null
+      for file in @files
+        if file.public_id == fileIdToRemove
+          removedFile = file
+        else
+          _files.push file
+      @files = _files
       @redraw()
       @checkMaximum()
+      @$input.trigger 'attachinary:fileremoved', [removedFile]
 
     checkMaximum: ->
       if @maximumReached()
