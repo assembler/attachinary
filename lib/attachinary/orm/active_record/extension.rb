@@ -14,7 +14,7 @@ module Attachinary
         class_name: '::Attachinary::File',
         conditions: { scope: options[:scope].to_s },
         dependent: :destroy,
-        order: options[:order]
+        order: 'position ASC'
 
 
       # def photo=(file)

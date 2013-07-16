@@ -10,6 +10,7 @@ class CreateAttachinaryTables < ActiveRecord::Migration
       t.integer :height
       t.string :format
       t.string :resource_type
+      t.integer :position
       t.timestamps
     end
     add_index :attachinary_files, [:attachinariable_type, :attachinariable_id, :scope], name: 'by_scoped_parent'
