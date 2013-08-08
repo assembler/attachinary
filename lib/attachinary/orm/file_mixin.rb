@@ -27,6 +27,11 @@ module Attachinary
 
   private
     def destroy_file
+      metadata = attachinariable.send "#{self.scope}_metadata"
+      if metadata.has_key?(:delete_resource_on_destroy) && metadata[:delete_resource_on_destroy] == false
+        # do not delete the resource on cloudinary
+        return
+      end
       Cloudinary::Uploader.destroy(public_id) if public_id
     end
 
