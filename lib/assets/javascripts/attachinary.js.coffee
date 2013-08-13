@@ -10,9 +10,13 @@
         <ul>
           <% for(var i=0; i<files.length; i++){ %>
             <li>
-              <img
-                src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'jpg', "crop": 'fill', "width": 75, "height": 75 }) %>"
-                alt="" width="75" height="75" />
+              <% if(files[i].resource_type == "raw") { %>
+                <div class="raw-file"></div>
+              <% } else { %>
+                <img
+                  src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'jpg', "crop": 'fill', "width": 75, "height": 75 }) %>"
+                  alt="" width="75" height="75" />
+              <% } %>
               <a href="#" data-remove="<%= files[i].public_id %>">Remove</a>
             </li>
           <% } %>
@@ -106,7 +110,7 @@
 
 
     addFile: (file) ->
-      if !@options.accept || $.inArray(file.format, @options.accept) != -1
+      if !@options.accept || $.inArray(file.format, @options.accept) != -1  || $.inArray(file.resource_type, @options.accept) != -1
         @files.push file
         @redraw()
         @checkMaximum()
