@@ -137,6 +137,14 @@ user.photo_urls = %w[ http://path/to/photo1.jpg http://path/to/photo2.jpg]
 
 # uploading by passing IO object (e.g. direct file upload)
 user.avatar = File.open("/path/to/file", 'r')
+
+# if you want to provide additionals parameters from http://cloudinary.com/documentation/upload_images
+# you need to use diffrent syntax
+user.send(:avatar=, File.open("path/to/file", 'r'), :folder => Rails.env.to_s)
+
+# # uploading photos by passing multiple urls and optional parameters that will be added to every file.
+user.send(:photo_urls=, %w[ http://path/to/photo1.jpg http://path/to/photo2.jpg], folder: Rails.env.to_s, use_filename: true, image_metadata: true)
+
 ```
 
 

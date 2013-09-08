@@ -21,7 +21,7 @@ module Attachinary
 
       # alias_method "orig_photo=", "photo="
       # def photo=(input)
-      #   input = Attachinary::Utils.process_input(input)
+      #   input = Attachinary::Utils.process_input(input, upload_options)
       #   if input.nil?
       #     super(nil)
       #   else
@@ -30,8 +30,8 @@ module Attachinary
       #   end
       # end
       alias_method "orig_#{options[:scope]}=", "#{options[:scope]}="
-      define_method "#{options[:scope]}=" do |input|
-        input = Attachinary::Utils.process_input(input)
+      define_method "#{options[:scope]}=" do |input, upload_options = {}|
+        input = Attachinary::Utils.process_input(input, upload_options)
         if !input.nil?
           input = [input].flatten
           input = (options[:single] ? input[0] : input)
