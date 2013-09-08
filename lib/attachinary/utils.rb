@@ -23,7 +23,7 @@ module Attachinary
       when :blank?.to_proc
         nil
       when lambda { |e| e.respond_to?(:read) }
-        upload_options.merge resource_type: 'auto'
+        upload_options.merge! resource_type: 'auto'
         process_hash Cloudinary::Uploader.upload(input, upload_options), scope
       when String
         process_json(input, scope)
