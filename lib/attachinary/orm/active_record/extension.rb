@@ -17,7 +17,7 @@ module Attachinary
 
 
       # def photo=(file)
-      #   input = Attachinary::Utils.process_input(input)
+      #   input = Attachinary::Utils.process_input(input, upload_options)
       #   if input.blank?
       #     photo_files.clear
       #   else
@@ -25,8 +25,8 @@ module Attachinary
       #     self.photo_files = files
       #   end
       # end
-      define_method "#{options[:scope]}=" do |input|
-        input = Attachinary::Utils.process_input(input, options[:scope])
+      define_method "#{options[:scope]}=" do |input, upload_options = {}|
+        input = Attachinary::Utils.process_input(input, upload_options, options[:scope])
         if input.nil?
           send("#{relation}").clear
         else
