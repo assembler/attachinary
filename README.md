@@ -26,30 +26,51 @@ Attachinary uses [Cloudinary](http://cloudinary.com) service. Gem is structured 
 
 First, make sure that you have [cloudinary gem](https://github.com/cloudinary/cloudinary_gem) installed and properly configured.
 
-Add following line to your `Gemfile`:
+Add the following line to your `Gemfile`:
 
     gem 'attachinary'
 
-Specify which ORM you wish to use by adding following line to your `application.rb` file (or custom initializer):
+Specify which ORM you wish to use by adding the following line to your `application.rb` file (or custom initializer):
 
 	require "attachinary/orm/YOUR_ORM" # active_record or mongoid
 
-If you're using `ActiveRecord` ORM, then run following lines to generate required table:
+If you're using `ActiveRecord` ORM, then run the following commands to generate the required table:
 
 	rake attachinary:install:migrations
 	rake db:migrate
 
-Next, add following line in your `routes.rb` file:
+Next, add the following line in your `routes.rb` file:
 
 	mount Attachinary::Engine => "/attachinary"
 
 It will generate '/attachinary/cors' which will be used for iframe file transfers (for unsupported browsers).
 
-Finally, make sure that you have following line in head section of your application layout file:
+Then, make sure that you have the following line in the head section of your application layout file. This must
+come **after** your 'javascript_include tag :application' directive.
 
 	<%= cloudinary_js_config %>
 
+Now, you have to include the necessary javascript files. In your `application.js`, add the following:
 
+```javascript
+//= require jquery.ui.widget
+//= require jquery.iframe-transport
+//= require jquery.fileupload
+//= require cloudinary/jquery.cloudinary
+//= require attachinary
+```
+
+If you don't have the jQuery File Upload files, you can use this rake task to fetch (or update) them:
+
+```
+rake attachinary:fetch_fileupload
+```
+
+And finally, add this code on document ready:
+
+```javascript
+$('.attachinary-input').attachinary()
+```
 
 ## Usage
 
@@ -78,28 +99,6 @@ If you're using [SimpleForm](https://github.com/plataformatec/simple_form), you 
 ```erb
 <%= f.input :avatar, as: :attachinary %>
 <%= f.input :photos, as: :attachinary %>
-```
-
-Finally, you have to include necessary javascript files. In your `application.js`, add following lines:
-
-```javascript
-//= require jquery.ui.widget
-//= require jquery.iframe-transport
-//= require jquery.fileupload
-//= require cloudinary/jquery.cloudinary
-//= require attachinary
-```
-
-If you don't have the jQuery File Upload files, you can use following rake task to fetch (or update) them:
-
-```
-rake attachinary:fetch_fileupload
-```
-
-And, add this code on document ready:
-
-```javascript
-$('.attachinary-input').attachinary()
 ```
 
 Attachinary jquery plugin is based upon [jQuery File Upload plugin](https://github.com/blueimp/jQuery-File-Upload) but without any fancy UI (it leaves it up to you to decorate it).
