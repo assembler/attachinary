@@ -1,7 +1,7 @@
 class NotesController < ApplicationController
 
   def index
-    @notes = Note.scoped
+    @notes = Note.all
   end
 
   def new
@@ -9,7 +9,7 @@ class NotesController < ApplicationController
   end
 
   def create
-    @note = Note.new params[:note]
+    @note = Note.new note_params
     if @note.save
       redirect_to notes_url
     else
@@ -23,7 +23,7 @@ class NotesController < ApplicationController
 
   def update
     @note = Note.find params[:id]
-    if @note.update_attributes params[:note]
+    if @note.update(note_params)
       redirect_to notes_url
     else
       render 'edit'
@@ -34,6 +34,15 @@ class NotesController < ApplicationController
     @note = Note.find params[:id]
     @note.destroy
     redirect_to :back
+  end
+
+  private
+
+  def note_params
+    params.require(:note).permit(
+        :body, 
+        :photo,
+    )
   end
 
 end

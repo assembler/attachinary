@@ -20,7 +20,7 @@ module Attachinary
 
         # attr_accessible :photo
         # attr_accessible :images
-        attr_accessible :"#{options[:scope]}" if options[:accessible]
+        # attr_accessible :"#{options[:scope]}" if options[:accessible]
 
         # def photo?
         #   photo.present?

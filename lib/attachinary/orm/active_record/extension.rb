@@ -10,9 +10,9 @@ module Attachinary
       # has_many :photo_files, ...
       # has_many :image_files, ...
       has_many :"#{relation}",
+        -> { where scope: options[:scope].to_s }, 
         as: :attachinariable,
         class_name: '::Attachinary::File',
-        conditions: { scope: options[:scope].to_s },
         dependent: :destroy
 
 
