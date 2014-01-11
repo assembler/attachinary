@@ -1,4 +1,5 @@
 source "http://rubygems.org"
+ruby '2.1.0'
 
 # Declare your gem's dependencies in attachinary.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
@@ -8,14 +9,14 @@ gemspec
 # used by the dummy application
 gem 'jquery-rails'
 gem 'cloudinary'
-gem 'simple_form', '~> 2.0.0'
+gem 'simple_form', '~> 3.0.0'
 
 group :assets do
-  gem 'coffee-rails', '~> 3.2.1'
+  gem 'coffee-rails', '~> 4.0.0'
 end
 
 group :mongoid do
-  gem 'mongoid', '~> 3.0.0'
+  gem 'mongoid', '~> 4.0.0alpha2'
 end
 
 

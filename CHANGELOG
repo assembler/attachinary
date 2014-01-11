@@ -1,3 +1,6 @@
+= Version 2.0.0 (rochers)
+  * Added support for Rails 4
+
 = Version 1.2.7 (wip)
   * Implemented raw file type handling (roomthirteen)
 
