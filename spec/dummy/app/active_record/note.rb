@@ -6,6 +6,4 @@ class Note < ActiveRecord::Base
   validates :body, presence: true, length: { minimum: 4, maximum: 128 }
   validates :photo, presence: true
 
-  attr_accessible :body
-
 end
