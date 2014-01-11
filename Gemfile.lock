@@ -35,7 +35,6 @@ GEM
     addressable (2.3.5)
     arel (4.0.1)
     atomic (1.1.14)
-    awesome_print (1.1.0)
     aws_cf_signer (0.1.2)
     bson (2.1.0)
     builder (3.1.4)
@@ -191,7 +190,6 @@ PLATFORMS
 
 DEPENDENCIES
   attachinary!
-  awesome_print
   capybara
   capybara-webkit
   cloudinary
