@@ -1,5 +1,4 @@
 source "http://rubygems.org"
-ruby '2.1.0'
 
 # Declare your gem's dependencies in attachinary.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
