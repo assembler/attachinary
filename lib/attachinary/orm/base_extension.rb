@@ -43,16 +43,18 @@ module Attachinary
           # def photo_url=(url)
           #   ...
           # end
-          define_method :"#{options[:scope]}_url=" do |url|
-            send(:"#{options[:scope]}=", Cloudinary::Uploader.upload(url, resource_type: "auto"))
+          define_method :"#{options[:scope]}_url=" do |url, upload_options = {}|
+            upload_options.merge! resource_type: 'auto'
+            send(:"#{options[:scope]}=", Cloudinary::Uploader.upload(url, upload_options))
           end
 
         else
           # def image_urls=(urls)
           #   ...
           # end
-          define_method :"#{options[:singular]}_urls=" do |urls|
-            send(:"#{options[:scope]}=", urls.map { |url| Cloudinary::Uploader.upload(url, resource_type: "auto") })
+          define_method :"#{options[:singular]}_urls=" do |urls, upload_options = {}|
+            upload_options.merge! resource_type: 'auto'
+            send(:"#{options[:scope]}=", urls.map { |url| Cloudinary::Uploader.upload(url, upload_options) })
           end
         end
 

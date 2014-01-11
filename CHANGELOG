@@ -1,3 +1,21 @@
+= Version 1.2.7 (wip)
+  * Implemented raw file type handling (roomthirteen)
+
+= Version 1.2.6
+  * Added "attachinary:fileadded" and "attachinary:fileremoved" js events
+
+= Version 1.2.5
+  * BUG FIX: Default jQuery plugin options mutation
+
+= Version 1.2.4
+  * Ability to specify custom dropzone via config (drewmca)
+  * BUG FIX: Bad browsers (IE) can put '[null]' into the attachinary hash (Yan Pritzker)
+  * BUG FIX: Ensuring tags are unique (Yan Pritzker)
+
+= Version 1.2.3
+  * Fixed bug with multiple submit buttons in one form (Benjamin Seibert)
+  * IE content-type fix (Yan Pritzker)
+
 = Version 1.2.2
   * Ability to cleanup unused files:
     files are automatically tagged with `attachinary_tmp` during upload, and

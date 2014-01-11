@@ -2,7 +2,7 @@ module Attachinary
   module Utils
 
     def self.process_json(json, scope=nil)
-      [JSON.parse(json)].flatten.map do |data|
+      [JSON.parse(json)].flatten.compact.map do |data|
         process_hash(data, scope)
       end
     end
@@ -19,18 +19,19 @@ module Attachinary
     end
 
 
-    def self.process_input(input, scope=nil)
+    def self.process_input(input, upload_options, scope=nil)
       case input
       when :blank?.to_proc
         nil
       when lambda { |e| e.respond_to?(:read) }
-        process_hash Cloudinary::Uploader.upload(input, resource_type: 'auto'), scope
+        upload_options.merge! resource_type: 'auto'
+        process_hash Cloudinary::Uploader.upload(input, upload_options), scope
       when String
         process_json(input, scope)
       when Hash
         process_hash(input, scope)
       when Array
-        input = input.map{ |el| process_input(el, scope) }.flatten.compact
+        input = input.map{ |el| process_input(el, upload_options, scope) }.flatten.compact
         input = nil if input.empty?
         input
       else

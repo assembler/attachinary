@@ -10,9 +10,13 @@
         <ul>
           <% for(var i=0; i<files.length; i++){ %>
             <li>
-              <img
-                src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'jpg', "crop": 'fill', "width": 75, "height": 75 }) %>"
-                alt="" width="75" height="75" />
+              <% if(files[i].resource_type == "raw") { %>
+                <div class="raw-file"></div>
+              <% } else { %>
+                <img
+                  src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'jpg', "crop": 'fill', "width": 75, "height": 75 }) %>"
+                  alt="" width="75" height="75" />
+              <% } %>
               <a href="#" data-remove="<%= files[i].public_id %>">Remove</a>
             </li>
           <% } %>
@@ -23,7 +27,7 @@
 
 
   $.fn.attachinary = (options) ->
-    settings = $.extend $.attachinary.config, options
+    settings = $.extend {}, $.attachinary.config, options
 
     this.each ->
       $this = $(this)
@@ -54,7 +58,7 @@
         dataType: 'json'
         paramName: 'file'
         headers: {"X-Requested-With": "XMLHttpRequest"}
-        dropZone: @$input
+        dropZone: @config.dropZone || @$input
         sequentialUploads: true
 
       if @$input.attr('accept')
@@ -69,7 +73,9 @@
 
         @$input.prop 'disabled', true
         if @config.disableWith
-          @$submit.data 'old-val', @$submit.val()
+          @$submit.each (index,input) =>
+            $input = $(input)
+            $input.data 'old-val', $input.val()
           @$submit.val  @config.disableWith
           @$submit.prop 'disabled', true
 
@@ -91,7 +97,9 @@
 
         @checkMaximum()
         if @config.disableWith
-          @$submit.val  @$submit.data('old-val')
+          @$submit.each (index,input) =>
+            $input = $(input)
+            $input.val  $input.data('old-val')
           @$submit.prop 'disabled', false
 
 
@@ -102,17 +110,26 @@
 
 
     addFile: (file) ->
-      if !@options.accept || $.inArray(file.format, @options.accept) != -1
+      if !@options.accept || $.inArray(file.format, @options.accept) != -1  || $.inArray(file.resource_type, @options.accept) != -1
         @files.push file
         @redraw()
         @checkMaximum()
+        @$input.trigger 'attachinary:fileadded', [file]
       else
         alert @config.invalidFormatMessage
 
     removeFile: (fileIdToRemove) ->
-      @files = (file for file in @files when file.public_id != fileIdToRemove)
+      _files = []
+      removedFile = null
+      for file in @files
+        if file.public_id == fileIdToRemove
+          removedFile = file
+        else
+          _files.push file
+      @files = _files
       @redraw()
       @checkMaximum()
+      @$input.trigger 'attachinary:fileremoved', [removedFile]
 
     checkMaximum: ->
       if @maximumReached()
