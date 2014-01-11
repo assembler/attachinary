@@ -11,8 +11,8 @@ module Attachinary
       if hash['id']
         Attachinary::File.find hash['id']
       else
-        permitted_params = [:public_id, :version, :width, :height, :format, :resource_type]
-        file = Attachinary::File.new hash.select {|k,v| permitted_params.include?(:"#{k}") }
+        permitted_params = ActionController::Parameters.new(hash).permit(:public_id, :version, :width, :height, :format, :resource_type)
+        file = Attachinary::File.new(permitted_params)
         file.scope = scope.to_s if scope && file.respond_to?(:scope=)
         file
       end
