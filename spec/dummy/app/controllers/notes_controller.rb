@@ -1,7 +1,11 @@
 class NotesController < ApplicationController
 
   def index
-    @notes = Note.all
+    if Rails::VERSION::MAJOR == 3
+      @notes = Note.all
+    else
+      @notes = Note.all.to_a
+    end
   end
 
   def new
@@ -39,10 +43,14 @@ class NotesController < ApplicationController
   private
 
   def note_params
-    params.require(:note).permit(
-        :body, 
-        :photo,
-    )
+    if Rails::VERSION::MAJOR == 3
+      params[:note].slice(:body, :photo)
+    else
+      params.require(:note).permit(
+          :body, 
+          :photo,
+      )
+    end
   end
 
 end

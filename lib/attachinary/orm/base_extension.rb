@@ -20,7 +20,9 @@ module Attachinary
 
         # attr_accessible :photo
         # attr_accessible :images
-        # attr_accessible :"#{options[:scope]}" if options[:accessible]
+        if Rails::VERSION::MAJOR == 3
+          attr_accessible :"#{options[:scope]}" if options[:accessible]
+        end
 
         # def photo?
         #   photo.present?

@@ -2,6 +2,9 @@ module Attachinary
   module FileMixin
     def self.included(base)
       base.validates :public_id, :version, :resource_type, presence: true
+      if Rails::VERSION::MAJOR == 3
+        base.attr_accessible :public_id, :version, :width, :height, :format, :resource_type
+      end
       base.after_destroy :destroy_file
       base.after_create  :remove_temporary_tag
     end

@@ -11,8 +11,12 @@ module Attachinary
       if hash['id']
         Attachinary::File.find hash['id']
       else
-        permitted_params = ActionController::Parameters.new(hash).permit(:public_id, :version, :width, :height, :format, :resource_type)
-        file = Attachinary::File.new(permitted_params)
+        file = if Rails::VERSION::MAJOR == 3
+          Attachinary::File.new hash.slice(*Attachinary::File.attr_accessible[:default].to_a)
+        else
+          permitted_params = ActionController::Parameters.new(hash).permit(:public_id, :version, :width, :height, :format, :resource_type)
+          Attachinary::File.new(permitted_params)
+        end
         file.scope = scope.to_s if scope && file.respond_to?(:scope=)
         file
       end

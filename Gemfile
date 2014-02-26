@@ -8,14 +8,14 @@ gemspec
 # used by the dummy application
 gem 'jquery-rails'
 gem 'cloudinary'
-gem 'simple_form', '~> 3.0.0'
+gem 'simple_form'
 
 group :assets do
-  gem 'coffee-rails', '~> 4.0.0'
+  gem 'coffee-rails'
 end
 
 group :mongoid do
-  gem 'mongoid', '~> 4.0.0alpha2'
+  gem 'mongoid'
 end
 
 

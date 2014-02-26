@@ -104,11 +104,11 @@ describe Note do
 
         image1 = build(:file)
         subject.images << image1
-        subject.images.should =~ [image1]
+        subject.images.should == [image1]
 
         image2 = build(:file)
         subject.images << image2
-        subject.images.should =~ [image1, image2]
+        subject.images.should == [image1, image2]
 
         subject.images = nil
         subject.images.should be_blank
