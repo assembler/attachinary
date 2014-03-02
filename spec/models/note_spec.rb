@@ -13,9 +13,20 @@ describe Note do
     let(:photo) { build(:file) }
 
     describe "after_destroy" do
+      after(:each) do
+        Cloudinary.config.delete_field(:attachinary_keep_remote) if Cloudinary.config.respond_to?(:attachinary_keep_remote)
+      end
+      
       it "destroys attached files" do
         note = create(:note, photo: photo)
         Cloudinary::Uploader.should_receive(:destroy).with(photo.public_id)
+        note.destroy
+      end
+      
+      it "keeps attached files if Cloudinary.config.attachinary_keep_remote == true" do
+        Cloudinary.config.attachinary_keep_remote = true
+        note = create(:note, photo: photo)
+        Cloudinary::Uploader.should_not_receive(:destroy).with(photo.public_id)
         note.destroy
       end
     end
