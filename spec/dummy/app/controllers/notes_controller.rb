@@ -27,7 +27,7 @@ class NotesController < ApplicationController
 
   def update
     @note = Note.find params[:id]
-    if @note.update(note_params)
+    if @note.update_attributes(note_params)
       redirect_to notes_url
     else
       render 'edit'
