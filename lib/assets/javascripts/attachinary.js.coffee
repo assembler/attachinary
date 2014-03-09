@@ -43,7 +43,8 @@
       @files = @options.files
 
       @$form = @$input.closest('form')
-      @$submit = @$form.find('input[type=submit]')
+      @$submit = @$form.find(@options.submit_selector ? 'input[type=submit]')
+      @$wrapper = @$input.closest(@options.wrapper_container_selector) if @options.wrapper_container_selector?
 
       @initFileUpload()
       @addFilesContainer()
@@ -69,13 +70,14 @@
     bindEventHandlers: ->
       @$input.bind 'fileuploadsend', (event, data) =>
         @$input.addClass 'uploading'
+        @$wrapper.addClass 'uploading' if @$wrapper?
         @$form.addClass  'uploading'
 
         @$input.prop 'disabled', true
         if @config.disableWith
           @$submit.each (index,input) =>
             $input = $(input)
-            $input.data 'old-val', $input.val()
+            $input.data 'old-val', $input.val() unless $input.data('old-val')?
           @$submit.val  @config.disableWith
           @$submit.prop 'disabled', true
 
@@ -93,6 +95,7 @@
 
       @$input.bind 'fileuploadalways', (event) =>
         @$input.removeClass 'uploading'
+        @$wrapper.removeClass 'uploading' if @$wrapper?
         @$form.removeClass  'uploading'
 
         @checkMaximum()
@@ -133,8 +136,10 @@
 
     checkMaximum: ->
       if @maximumReached()
+        @$wrapper.addClass 'disabled' if @$wrapper?
         @$input.prop('disabled', true)
       else
+        @$wrapper.removeClass 'disabled' if @$wrapper?
         @$input.prop('disabled', false)
 
     maximumReached: ->
@@ -143,8 +148,11 @@
 
 
     addFilesContainer: ->
-      @$filesContainer = $('<div class="attachinary_container">')
-      @$input.after @$filesContainer
+      if @options.files_container_selector? and $(@options.files_container_selector).length > 0
+        @$filesContainer = $(@options.files_container_selector)
+      else
+        @$filesContainer = $('<div class="attachinary_container">')
+        @$input.after @$filesContainer
 
     redraw: ->
       @$filesContainer.empty()
