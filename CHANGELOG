@@ -1,5 +1,8 @@
-= Version 2.0.0 (rochers)
-  * Added support for Rails 4
+= Version 1.3.0
+  * Added support for Rails 4 (thanks @rochers)
+  * Use resource type when building cloudinary urls
+  * Make deletion of remote resources configurable
+  * Add some optional convenience configurations to attachinary.js
 
 = Version 1.2.7 (wip)
   * Implemented raw file type handling (roomthirteen)
