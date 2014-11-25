@@ -9,16 +9,23 @@ module Attachinary
 
       # has_many :photo_files, ...
       # has_many :image_files, ...
-      has_many :"#{relation}",
-        as: :attachinariable,
-        class_name: '::Attachinary::File',
-        conditions: { scope: options[:scope].to_s },
-        dependent: :destroy,
-        order: 'position ASC'
-
+      if Rails::VERSION::MAJOR == 3
+        has_many :"#{relation}",
+          as: :attachinariable,
+          class_name: '::Attachinary::File',
+          conditions: { scope: options[:scope].to_s },
+          dependent: :destroy,
+          order: 'position ASC'
+      else
+        has_many :"#{relation}",
+          -> { where(scope: options[:scope].to_s).order('position ASC') },
+          as: :attachinariable,
+          class_name: '::Attachinary::File',
+          dependent: :destroy
+      end
 
       # def photo=(file)
-      #   input = Attachinary::Utils.process_input(input)
+      #   input = Attachinary::Utils.process_input(input, upload_options)
       #   if input.blank?
       #     photo_files.clear
       #   else
@@ -26,8 +33,8 @@ module Attachinary
       #     self.photo_files = files
       #   end
       # end
-      define_method "#{options[:scope]}=" do |input|
-        input = Attachinary::Utils.process_input(input, options[:scope])
+      define_method "#{options[:scope]}=" do |input, upload_options = {}|
+        input = Attachinary::Utils.process_input(input, upload_options, options[:scope])
         if input.nil?
           send("#{relation}").clear
         else

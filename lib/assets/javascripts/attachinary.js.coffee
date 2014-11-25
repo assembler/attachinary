@@ -10,9 +10,13 @@
         <ul>
           <% for(var i=0; i<files.length; i++){ %>
             <li>
-              <img
-                src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'jpg', "crop": 'fill', "width": 75, "height": 75 }) %>"
-                alt="" width="75" height="75" />
+              <% if(files[i].resource_type == "raw") { %>
+                <div class="raw-file"></div>
+              <% } else { %>
+                <img
+                  src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'jpg', "crop": 'fill', "width": 75, "height": 75 }) %>"
+                  alt="" width="75" height="75" />
+              <% } %>
               <a href="#" data-remove="<%= files[i].public_id %>">Remove</a>
             </li>
           <% } %>
@@ -39,7 +43,8 @@
       @files = @options.files
 
       @$form = @$input.closest('form')
-      @$submit = @$form.find('input[type=submit]')
+      @$submit = @$form.find(@options.submit_selector ? 'input[type=submit]')
+      @$wrapper = @$input.closest(@options.wrapper_container_selector) if @options.wrapper_container_selector?
 
       @initFileUpload()
       @addFilesContainer()
@@ -65,13 +70,14 @@
     bindEventHandlers: ->
       @$input.bind 'fileuploadsend', (event, data) =>
         @$input.addClass 'uploading'
+        @$wrapper.addClass 'uploading' if @$wrapper?
         @$form.addClass  'uploading'
 
         @$input.prop 'disabled', true
         if @config.disableWith
           @$submit.each (index,input) =>
             $input = $(input)
-            $input.data 'old-val', $input.val()
+            $input.data 'old-val', $input.val() unless $input.data('old-val')?
           @$submit.val  @config.disableWith
           @$submit.prop 'disabled', true
 
@@ -89,6 +95,7 @@
 
       @$input.bind 'fileuploadalways', (event) =>
         @$input.removeClass 'uploading'
+        @$wrapper.removeClass 'uploading' if @$wrapper?
         @$form.removeClass  'uploading'
 
         @checkMaximum()
@@ -106,22 +113,33 @@
 
 
     addFile: (file) ->
-      if !@options.accept || $.inArray(file.format, @options.accept) != -1
+      if !@options.accept || $.inArray(file.format, @options.accept) != -1  || $.inArray(file.resource_type, @options.accept) != -1
         @files.push file
         @redraw()
         @checkMaximum()
+        @$input.trigger 'attachinary:fileadded', [file]
       else
         alert @config.invalidFormatMessage
 
     removeFile: (fileIdToRemove) ->
-      @files = (file for file in @files when file.public_id != fileIdToRemove)
+      _files = []
+      removedFile = null
+      for file in @files
+        if file.public_id == fileIdToRemove
+          removedFile = file
+        else
+          _files.push file
+      @files = _files
       @redraw()
       @checkMaximum()
+      @$input.trigger 'attachinary:fileremoved', [removedFile]
 
     checkMaximum: ->
       if @maximumReached()
+        @$wrapper.addClass 'disabled' if @$wrapper?
         @$input.prop('disabled', true)
       else
+        @$wrapper.removeClass 'disabled' if @$wrapper?
         @$input.prop('disabled', false)
 
     maximumReached: ->
@@ -130,8 +148,11 @@
 
 
     addFilesContainer: ->
-      @$filesContainer = $('<div class="attachinary_container">')
-      @$input.after @$filesContainer
+      if @options.files_container_selector? and $(@options.files_container_selector).length > 0
+        @$filesContainer = $(@options.files_container_selector)
+      else
+        @$filesContainer = $('<div class="attachinary_container">')
+        @$input.after @$filesContainer
 
     redraw: ->
       @$filesContainer.empty()
