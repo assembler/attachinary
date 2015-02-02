@@ -62,6 +62,10 @@
         dropZone: @config.dropZone || @$input
         sequentialUploads: true
 
+      # attach the pasteZone option if the user has specified it
+      if @options.pasteZone
+        options.pasteZone = @options.pasteZone
+
       if @$input.attr('accept')
         options.acceptFileTypes = new RegExp("^#{@$input.attr('accept').split(",").join("|")}$", "i")
 
