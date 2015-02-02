@@ -63,9 +63,9 @@
         sequentialUploads: true
 
       # attach the pasteZone option if the user has specified it
-      if @options.pasteZone
+      if @options.pasteZone != undefined
         options.pasteZone = @options.pasteZone
-      else if @config.pasteZone
+      else if @config.pasteZone != undefined
         options.pasteZone = @config.pasteZone
 
       if @$input.attr('accept')
