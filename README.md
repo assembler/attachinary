@@ -113,7 +113,7 @@ Here comes the good part. There is no need to transform images on your server. I
 
 ```erb
 <% if @user.avatar? %>
-	<%= cl_image_tag(@user.avatar.path, { size: '50x50', crop: :fit, gravity: :face }) %>
+	<%= cl_image_tag(@user.avatar.path, { size: '50x50', crop: :thumb, gravity: :face }) %>
 <% end %>
 
 <% @user.photos.each do |photo| %>
