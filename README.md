@@ -158,16 +158,9 @@ If you don't want fancy JS features, all you have to do is just switch to `:inpu
 ```
 
 
-## Conventions
+### Unsigned Uploads
 
-* always use singular identifier after `has_attachment` (e.g. `has_attachment :photo`)
-* always use plural identifier after `has_attachments` (e.g. `has_attachments :images`)
-* do not use colliding identifiers (e.g. `has_attachment :photo` and `has_attachments :photos`) on same model.
-
-
-## Unsigned Uploads
-
-If you're using Cloudinary's [unsigned uploads feature](http://cloudinary.com/blog/direct_upload_made_easy_from_browser_or_mobile_app_to_the_cloud) where you can upload to Cloudinary directly from the browser without using Attachinary, you can save the upload in your database as an Attachinary record without triggering another upload by doing the following:
+If you're using Cloudinary's [unsigned uploads feature](http://cloudinary.com/blog/direct_upload_made_easy_from_browser_or_mobile_app_to_the_cloud), where you can upload to Cloudinary directly from the browser without using Attachinary, you can save the upload in your database as an Attachinary record without triggering another upload by doing the following:
 
 ```ruby
 model.upload = {
@@ -181,6 +174,14 @@ model.upload = {
 
 model.upload = '{"version":"123456","public_id":"askdjfslkdjflksd","resource_type":"image","format":"png"}'
 ```
+
+
+## Conventions
+
+* always use singular identifier after `has_attachment` (e.g. `has_attachment :photo`)
+* always use plural identifier after `has_attachments` (e.g. `has_attachments :images`)
+* do not use colliding identifiers (e.g. `has_attachment :photo` and `has_attachments :photos`) on same model.
+
 
 ## Requirements and Compatibility
 
