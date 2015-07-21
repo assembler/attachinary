@@ -1,0 +1,39 @@
+<%= form_for(@post) do |f| %>
+  <% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+      <% @post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <div class="form-group">
+  <div class="field form-group">
+    <%= f.label :title %><br>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+  <div class="field form-group">
+    <%= f.label :body %><br>
+    <%= f.text_area :body, class: "form-control" %>
+  </div>
+  <div class="field form-group">
+      <div class="input-group">
+    <span class="input-group-addon">
+        <%= f.check_box :published, class: "checkbox" %>
+
+    </span>
+      <%= f.label :published, class: "form-control" %>
+      </div>
+  </div>
+  <div class="field form-group">
+      <%= f.label :photo%>
+      <%= f.attachinary_file_field :photo %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+    </div>
+<% end %>
