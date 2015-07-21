@@ -13,4 +13,19 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require bootstrap-sprockets
+//= require blueimp-file-upload/js/vendor/jquery.ui.widget
+//= require blueimp-file-upload/js/jquery.iframe-transport
+//= require blueimp-file-upload/js/jquery.fileupload
+//= require cloudinary/jquery.cloudinary
+//= require attachinary
+
 //= require_tree .
+
+
+//jQuery(function() {
+    $(document).on('ready page:chagne page:load', function(e){
+        $('.attachinary-input').attachinary();
+    });
+
+//});

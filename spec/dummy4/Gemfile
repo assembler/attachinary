@@ -43,3 +43,6 @@ group :development, :test do
   gem 'spring'
 end
 
+gem 'cloudinary'
+gem 'attachinary'
+gem 'bootstrap-sass', '~> 3.3.5'

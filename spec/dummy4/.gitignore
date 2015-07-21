@@ -15,3 +15,6 @@
 /log/*
 !/log/.keep
 /tmp
+*/cloudinary.yml
+vendor/assets/
+db/
