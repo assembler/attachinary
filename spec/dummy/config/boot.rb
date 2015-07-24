@@ -3,7 +3,7 @@ unless defined?(ATTACHINARY_ORM)
 end
 
 require 'rubygems'
-gemfile = File.expand_path('../../../../Gemfile', __FILE__)
+gemfile = File.expand_path('../../Gemfile', __FILE__)
 
 if File.exist?(gemfile)
   ENV['BUNDLE_GEMFILE'] = gemfile
@@ -11,4 +11,4 @@ if File.exist?(gemfile)
   Bundler.setup
 end
 
-$:.unshift File.expand_path('../../../../lib', __FILE__)
+$:.unshift File.expand_path('../lib', __FILE__)
