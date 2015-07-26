@@ -94,9 +94,9 @@ describe Note do
 
     describe '#photo?' do
       it 'checks whether photo is present' do
-        subject.photo?.should be_true
+        subject.photo?.should be_truthy
         subject.photo = nil
-        subject.photo?.should be_false
+        subject.photo?.should be_falsey
       end
     end
 
@@ -111,7 +111,7 @@ describe Note do
   describe 'image attachments' do
     describe '#images' do
       it 'manages images' do
-        subject.images?.should be_false
+        subject.images?.should be_falsey
 
         image1 = build(:file)
         subject.images << image1
