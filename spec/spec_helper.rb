@@ -19,6 +19,10 @@ require 'database_cleaner'
 require "capybara/webkit"
 Capybara.javascript_driver = :webkit
 
+Capybara::Webkit.configure do |config|
+  config.allow_url("api.cloudinary.com")
+  config.allow_url("res.cloudinary.com")
+end
 
 ENGINE_RAILS_ROOT = File.join(File.dirname(__FILE__), '../')
 

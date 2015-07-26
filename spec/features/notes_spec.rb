@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe 'Notes' do
+  Capybara.default_wait_time = 10
 
 
   describe 'Creating new note' do
@@ -34,13 +35,20 @@ describe 'Notes' do
       it 'allows multiple images to be uploaded' do
         within 'div.images' do
           attach_file "note[images][]", File.expand_path('../../support/A.gif', __FILE__)
-          page.should have_css 'input:not([disabled])'
+          value = find(:xpath, './/input[@name="note[images][]" and @type="hidden" ]', :visible => false).value
+          images = ActiveSupport::JSON.decode( value)
+          images.length.should be 1
+          images.map{|i| i["original_filename"]}.should eq ["A"]
+
           attach_file "note[images][]", File.expand_path('../../support/B.gif', __FILE__)
-          page.should have_css 'input:not([disabled])'
+          value = find(:xpath, './/input[@name="note[images][]" and @type="hidden" ]', :visible => false).value
+          images = ActiveSupport::JSON.decode( value)
+          images.length.should be 2
+          images.map{|i| i["original_filename"]}.sort.should eq ["A", "B"]
         end
       end
 
-      it 'preserves uploaded photo accross postbacks' do
+      it 'preserves uploaded photo across postbacks' do
         within 'div.photo' do
           attach_file "note[photo]", File.expand_path('../../support/A.gif', __FILE__)
           page.should have_css 'img'
