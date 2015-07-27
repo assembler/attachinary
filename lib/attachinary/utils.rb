@@ -12,11 +12,12 @@ module Attachinary
         Attachinary::File.find hash['id']
       else
         file = if Rails::VERSION::MAJOR == 3
-          Attachinary::File.new hash.slice(*Attachinary::File.attr_accessible[:default].to_a)
-        else
-          permitted_params = ActionController::Parameters.new(hash.slice(:public_id, :version, :width, :height, :format, :resource_type)).permit!
-          Attachinary::File.new(permitted_params)
-        end
+                 Attachinary::File.new hash.slice(*Attachinary::File.attr_accessible[:default].to_a)
+               else
+                 hash.symbolize_keys!
+                 permitted_params = ActionController::Parameters.new(hash.slice(:public_id, :version, :width, :height, :format, :resource_type)).permit!
+                 Attachinary::File.new(permitted_params)
+               end
         file.scope = scope.to_s if scope && file.respond_to?(:scope=)
         file
       end
@@ -29,7 +30,8 @@ module Attachinary
         nil
       when lambda { |e| e.respond_to?(:read) }
         upload_options.merge! resource_type: 'auto'
-        process_hash Cloudinary::Uploader.upload(input, upload_options), scope
+        upload_info = Cloudinary::Uploader.upload(input, upload_options)
+        process_hash upload_info, scope
       when String
         process_json(input, scope)
       when Hash

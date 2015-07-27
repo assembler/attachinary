@@ -1,4 +1,4 @@
-
+source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 3.2'
@@ -31,6 +31,7 @@ group :development, :test do
   gem 'valid_attribute'
   gem 'capybara'
   gem 'capybara-webkit'
+  gem 'selenium-webdriver'
   gem 'factory_girl_rails'
   gem 'launchy'
   gem 'database_cleaner'
@@ -38,6 +39,7 @@ group :development, :test do
   gem 'guard-rspec'
 end
 
+gem 'mongoid'
 gem 'cloudinary', '~> 1.1'
 gem 'attachinary', :path => '../..'
 gem 'simple_form'
