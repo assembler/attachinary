@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 describe 'Notes' do
-  Capybara.default_wait_time = 10
-  SHORT_SLEEP = 3
+  Capybara.default_wait_time = 15
 
   describe 'Creating new note' do
 
@@ -11,16 +10,10 @@ describe 'Notes' do
         visit path
       end
 
-      it 'checks file type', :js => true do
+      it 'display an alert if invalid file format is uploaded', :js => true do
         within 'div.photo' do
-          handle_alert do |message|
+          accept_alert 'Invalid file format' do
             attach_file 'note[photo]', "#{SPEC_ROOT}/support/A.txt"
-            Timeout::timeout(5) do
-              begin
-                sleep 0.250
-              end while alert_message.blank?
-              alert_message.downcase.should == 'invalid file format'
-            end
           end
         end
       end
@@ -35,15 +28,13 @@ describe 'Notes' do
       it 'allows multiple images to be uploaded', :js => true do
         within 'div.images' do
           attach_file "note[images][]", "#{SPEC_ROOT}/support/A.gif"
-          sleep SHORT_SLEEP
-          value = find(:xpath, './/input[@name="note[images][]" and @type="hidden" ]', :visible => false).value
+          value = find(:xpath, './/input[@name="note[images][]" and @type="hidden" and contains(@value, \'"A"\')]', :visible => false).value
           images = ActiveSupport::JSON.decode( value)
           images.length.should be 1
           images.map{|i| i["original_filename"]}.should eq ["A"]
 
           attach_file "note[images][]", "#{SPEC_ROOT}/support/B.gif"
-          sleep SHORT_SLEEP
-          value = find(:xpath, './/input[@name="note[images][]" and @type="hidden" ]', :visible => false).value
+          value = find(:xpath, './/input[@name="note[images][]" and @type="hidden"  and contains(@value, \'"B"\')]', :visible => false).value
           images = ActiveSupport::JSON.decode( value)
           images.length.should be 2
           images.map{|i| i["original_filename"]}.sort.should eq ["A", "B"]
