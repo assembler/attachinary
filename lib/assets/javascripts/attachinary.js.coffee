@@ -14,7 +14,7 @@
                 <div class="raw-file"></div>
               <% } else { %>
                 <img
-                  src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'jpg', "crop": 'fill', "width": 75, "height": 75 }) %>"
+                  src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'jpg', "crop": 'fill', "width": 75, "height": 75, "resource_type": "video" }) %>"
                   alt="" width="75" height="75" />
               <% } %>
               <a href="#" data-remove="<%= files[i].public_id %>">Remove</a>
