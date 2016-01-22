@@ -50,3 +50,9 @@ task :spec_all_orms do
 end
 
 task :default => :spec_all_orms
+
+task :build_js do
+  require "coffee-script"
+  compiled = CoffeeScript.compile(File.read("./lib/assets/javascripts/attachinary.js.coffee"))
+  File.open("./dist/attachinary.js", "w") { |f| f.write(compiled) }
+end
