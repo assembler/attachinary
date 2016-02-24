@@ -157,6 +157,20 @@ If you don't want fancy JS features, all you have to do is just switch to `:inpu
 <%= f.input :images, as: :file, input_html: { multiple: true } %>
 ```
 
+### Preventing n+1 queries when loading attachinary associations
+
+You can eager load attachinary associations.
+
+For example, I have a `user` model that has `photo` and `avatar` as attachments.
+
+```rb
+# user.rb
+  has_attachment :avatar
+  has_attachments :photos
+
+# users_controller.rb
+  User.includes(:avatar_files, :photo_files).all
+```
 
 ## Conventions
 
