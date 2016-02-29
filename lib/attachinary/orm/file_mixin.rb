@@ -2,7 +2,9 @@ module Attachinary
   module FileMixin
     def self.included(base)
       base.validates :public_id, :version, :resource_type, presence: true
-      base.attr_accessible :public_id, :version, :width, :height, :format, :resource_type, :position
+      if Rails::VERSION::MAJOR == 3
+        base.attr_accessible :public_id, :version, :width, :height, :format, :resource_type, :position
+      end
       base.after_destroy :destroy_file
       base.after_create  :remove_temporary_tag
     end
@@ -22,12 +24,17 @@ module Attachinary
 
     def fullpath(options={})
       format = options.delete(:format)
-      Cloudinary::Utils.cloudinary_url(path(format), options)
+      Cloudinary::Utils.cloudinary_url(path(format), options.reverse_merge(:resource_type => resource_type))
     end
-
+    
+  protected
+    def keep_remote?
+      Cloudinary.config.attachinary_keep_remote == true
+    end
+    
   private
     def destroy_file
-      Cloudinary::Uploader.destroy(public_id) if public_id
+      Cloudinary::Uploader.destroy(public_id) if public_id && !keep_remote?
     end
 
     def remove_temporary_tag

@@ -29,13 +29,14 @@ Dir[File.join(ENGINE_RAILS_ROOT, "spec/support/**/*.rb")].each {|f| require f }
 
 
 RSpec.configure do |config|
+  config.color_enabled = true
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.filter_run focus: true
   config.run_all_when_everything_filtered = true
 
   config.use_transactional_fixtures = false
   config.include FactoryGirl::Syntax::Methods
-  config.include RequestHelpers, type: :request
+  config.include RequestHelpers, type: :feature
 
   config.before(:suite) do
     DatabaseCleaner[ATTACHINARY_ORM].strategy = :truncation
