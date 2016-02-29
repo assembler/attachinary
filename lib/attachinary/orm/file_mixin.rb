@@ -7,7 +7,7 @@ module Attachinary
       base.after_create  :remove_temporary_tag
     end
 
-    def as_json(options)
+    def as_json(options={})
       super(only: [:id, :public_id, :format, :version, :resource_type], methods: [:path])
     end
 
