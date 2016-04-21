@@ -1,6 +1,11 @@
 module Attachinary
   module Utils
 
+    CLOUDINARY_ATTRS = [
+      :public_id, :version, :width, :height, :format, :resource_type,
+      :position, :bytes, :original_filename
+    ]
+
     def self.process_json(json, scope=nil)
       [JSON.parse(json)].flatten.compact.map do |data|
         process_hash(data, scope)
@@ -14,8 +19,9 @@ module Attachinary
         file = if Rails::VERSION::MAJOR == 3
           Attachinary::File.new hash.slice(*Attachinary::File.attr_accessible[:default].to_a)
         else
-          permitted_params = ActionController::Parameters.new(hash).permit(:public_id, :version, :width, :height, :format, :resource_type, :position)
-          Attachinary::File.new(permitted_params)
+          permitted_attrs = CLOUDINARY_ATTRS & Attachinary::File.column_names.map(&:to_sym)
+          file_params = ActionController::Parameters.new(hash).permit(permitted_attrs)
+          Attachinary::File.new(file_params)
         end
         file.scope = scope.to_s if scope && file.respond_to?(:scope=)
         file
