@@ -1,5 +1,4 @@
 (($) ->
-
   $.attachinary =
     index: 0
     config:
@@ -12,6 +11,10 @@
             <li>
               <% if(files[i].resource_type == "raw") { %>
                 <div class="raw-file"></div>
+              <% } else if(files[i].preview_url) { %>
+                <img
+                  src="<%= files[i].preview_url %>"
+                  alt="" width="75" height="75" />
               <% } else { %>
                 <img
                   src="<%= $.cloudinary.url(files[i].public_id, { "version": files[i].version, "format": 'jpg', "crop": 'fill', "width": 75, "height": 75 }) %>"
