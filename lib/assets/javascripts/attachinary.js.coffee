@@ -11,9 +11,9 @@
             <li>
               <% if(files[i].resource_type == "raw") { %>
                 <div class="raw-file"></div>
-              <% } else if(previewUrl) { %>
+              <% } else if(files[i].preview_url) { %>
                 <img
-                  src="<%= previewUrl %>"
+                  src="<%= files[i].preview_url %>"
                   alt="" width="75" height="75" />
               <% } else { %>
                 <img
@@ -25,8 +25,8 @@
           <% } %>
         </ul>
       """
-      render: (files, previewUrl) ->
-        $.attachinary.Templating.template(@template, files: files, previewUrl: previewUrl)
+      render: (files) ->
+        $.attachinary.Templating.template(@template, files: files)
 
 
   $.fn.attachinary = (options) ->
@@ -44,7 +44,6 @@
     constructor: (@$input, @config) ->
       @options = @$input.data('attachinary')
       @files = @options.files
-      @previewUrl = @config.previewUrl
 
       @$form = @$input.closest('form')
       @$submit = @$form.find(@options.submit_selector ? 'input[type=submit]')
@@ -133,7 +132,6 @@
           removedFile = file
         else
           _files.push file
-      @previewUrl = null
       @files = _files
       @redraw()
       @checkMaximum()
@@ -165,7 +163,7 @@
       if @files.length > 0
         @$filesContainer.append @makeHiddenField(JSON.stringify(@files))
 
-        @$filesContainer.append @config.render(@files, @previewUrl)
+        @$filesContainer.append @config.render(@files)
         @$filesContainer.find('[data-remove]').on 'click', (event) =>
           event.preventDefault()
           @removeFile $(event.target).data('remove')

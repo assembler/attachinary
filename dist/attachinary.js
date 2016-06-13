@@ -6,11 +6,10 @@
         disableWith: 'Uploading...',
         indicateProgress: true,
         invalidFormatMessage: 'Invalid file format',
-        template: "<ul>\n  <% for(var i=0; i<files.length; i++){ %>\n    <li>\n      <% if(files[i].resource_type == \"raw\") { %>\n        <div class=\"raw-file\"></div>\n      <% } else if(previewUrl) { %>\n        <img\n          src=\"<%= previewUrl %>\"\n          alt=\"\" width=\"75\" height=\"75\" />\n      <% } else { %>\n        <img\n          src=\"<%= $.cloudinary.url(files[i].public_id, { \"version\": files[i].version, \"format\": 'jpg', \"crop\": 'fill', \"width\": 75, \"height\": 75 }) %>\"\n          alt=\"\" width=\"75\" height=\"75\" />\n      <% } %>\n      <a href=\"#\" data-remove=\"<%= files[i].public_id %>\">Remove</a>\n    </li>\n  <% } %>\n</ul>",
-        render: function(files, previewUrl) {
+        template: "<ul>\n  <% for(var i=0; i<files.length; i++){ %>\n    <li>\n      <% if(files[i].resource_type == \"raw\") { %>\n        <div class=\"raw-file\"></div>\n      <% } else if(files[i].preview_url) { %>\n        <img\n          src=\"<%= files[i].preview_url %>\"\n          alt=\"\" width=\"75\" height=\"75\" />\n      <% } else { %>\n        <img\n          src=\"<%= $.cloudinary.url(files[i].public_id, { \"version\": files[i].version, \"format\": 'jpg', \"crop\": 'fill', \"width\": 75, \"height\": 75 }) %>\"\n          alt=\"\" width=\"75\" height=\"75\" />\n      <% } %>\n      <a href=\"#\" data-remove=\"<%= files[i].public_id %>\">Remove</a>\n    </li>\n  <% } %>\n</ul>",
+        render: function(files) {
           return $.attachinary.Templating.template(this.template, {
-            files: files,
-            previewUrl: previewUrl
+            files: files
           });
         }
       }
@@ -33,7 +32,6 @@
         this.config = config;
         this.options = this.$input.data('attachinary');
         this.files = this.options.files;
-        this.previewUrl = this.config.previewUrl;
         this.$form = this.$input.closest('form');
         this.$submit = this.$form.find((ref = this.options.submit_selector) != null ? ref : 'input[type=submit]');
         if (this.options.wrapper_container_selector != null) {
@@ -150,7 +148,6 @@
             _files.push(file);
           }
         }
-        this.previewUrl = null;
         this.files = _files;
         this.redraw();
         this.checkMaximum();
@@ -188,7 +185,7 @@
         this.$filesContainer.empty();
         if (this.files.length > 0) {
           this.$filesContainer.append(this.makeHiddenField(JSON.stringify(this.files)));
-          this.$filesContainer.append(this.config.render(this.files, this.previewUrl));
+          this.$filesContainer.append(this.config.render(this.files));
           this.$filesContainer.find('[data-remove]').on('click', (function(_this) {
             return function(event) {
               event.preventDefault();
