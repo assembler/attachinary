@@ -10,7 +10,9 @@ module Attachinary
     end
 
     def as_json(options={})
-      super(only: [:id, :public_id, :format, :version, :resource_type], methods: [:path])
+      super(only: [:id, :public_id, :format, :version, :resource_type], methods: [:path]).merge(
+        preview_url: preview_url(options)
+      )
     end
 
     def path(custom_format=nil)
@@ -25,6 +27,15 @@ module Attachinary
     def fullpath(options={})
       format = options.delete(:format)
       Cloudinary::Utils.cloudinary_url(path(format), options.reverse_merge(:resource_type => resource_type))
+    end
+
+    def preview_url(options={})
+      options.merge!(transformation: {
+        flags: :progressive,
+        fetch_format: :auto
+      })
+
+      Cloudinary::Utils.cloudinary_url(path, options)
     end
     
   protected
