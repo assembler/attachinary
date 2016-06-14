@@ -48,7 +48,9 @@ module Attachinary
 
       options[:html][:data] ||= {}
       options[:html][:data][:attachinary] = options[:attachinary] || {}
-      options[:html][:data][:attachinary][:files] = [model.send(relation)].compact.flatten
+      options[:html][:data][:attachinary][:files] = [model.send(relation)].compact.flatten.map do |file|
+        file.as_json(options)
+      end
 
       options[:html][:data][:form_data] = cloudinary_params.reject{ |k, v| v.blank? }
       options[:html][:data][:url] = cloudinary_upload_url
