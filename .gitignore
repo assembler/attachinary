@@ -10,4 +10,3 @@ spec/dummy/config/cloudinary.yml
 bin/
 
 .rspec
-config/cloudinary.yml
