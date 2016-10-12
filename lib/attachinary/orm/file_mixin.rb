@@ -35,7 +35,7 @@ module Attachinary
         fetch_format: :auto
       })
 
-      Cloudinary::Utils.cloudinary_url(path, options)
+      Cloudinary::Utils.cloudinary_url(path, options.clone)
     end
     
   protected
