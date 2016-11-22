@@ -14,7 +14,8 @@ module Attachinary
     end
 
     def attachinary_file_field_options(model, relation, options={})
-      options[:attachinary] = model.send("#{relation}_metadata")
+      options[:attachinary] ||= {}
+      options[:attachinary].merge! model.send("#{relation}_metadata")
 
       options[:cloudinary] ||= {}
       options[:cloudinary][:tags] ||= []
