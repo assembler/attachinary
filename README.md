@@ -172,6 +172,24 @@ For example, I have a `user` model that has `photo` and `avatar` as attachments.
   User.includes(:avatar_files, :photo_files).all
 ```
 
+### Unsigned Uploads
+
+If you're using Cloudinary's [unsigned uploads feature](http://cloudinary.com/blog/direct_upload_made_easy_from_browser_or_mobile_app_to_the_cloud), where you can upload to Cloudinary directly from the browser without using Attachinary, you can save the upload in your database as an Attachinary record without triggering another upload by doing the following:
+
+```ruby
+model.upload = {
+  :version       => "123456",
+  :public_id     => "askdjfslkdjflksd",
+  :resource_type => "image",
+  :format        => "png"
+}
+
+# or
+
+model.upload = '{"version":"123456","public_id":"askdjfslkdjflksd","resource_type":"image","format":"png"}'
+```
+
+
 ## Conventions
 
 * always use singular identifier after `has_attachment` (e.g. `has_attachment :photo`)
