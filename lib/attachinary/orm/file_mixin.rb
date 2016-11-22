@@ -9,7 +9,7 @@ module Attachinary
       base.after_create  :remove_temporary_tag
     end
 
-    def as_json(options)
+    def as_json(options = nil)
       super(only: [:id, :public_id, :format, :version, :resource_type], methods: [:path])
     end
 
@@ -26,12 +26,12 @@ module Attachinary
       format = options.delete(:format)
       Cloudinary::Utils.cloudinary_url(path(format), options.reverse_merge(:resource_type => resource_type))
     end
-    
+
   protected
     def keep_remote?
       Cloudinary.config.attachinary_keep_remote == true
     end
-    
+
   private
     def destroy_file
       Cloudinary::Uploader.destroy(public_id) if public_id && !keep_remote?
