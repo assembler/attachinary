@@ -150,8 +150,8 @@
 
 
     addFilesContainer: ->
-      if @options.files_container_selector? and $(@options.files_container_selector).length > 0
-        @$filesContainer = $(@options.files_container_selector)
+      if @config.files_container_selector? and $(@config.files_container_selector).length > 0
+        @$filesContainer = $(@config.files_container_selector)
       else
         @$filesContainer = $('<div class="attachinary_container">')
         @$input.after @$filesContainer
