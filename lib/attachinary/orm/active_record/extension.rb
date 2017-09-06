@@ -15,10 +15,17 @@ module Attachinary
           class_name: '::Attachinary::File',
           conditions: { scope: options[:scope].to_s },
           dependent: :destroy
+      elsif Rails::VERSION::MAJOR > 3 && Rails::VERSION::MAJOR < 5
+        has_many :"#{relation}",
+                 -> { where scope: options[:scope].to_s },
+                 as: :attachinariable,
+                 class_name: '::Attachinary::File',
+                 dependent: :destroy
       else
         has_many :"#{relation}",
           -> { where scope: options[:scope].to_s }, 
           as: :attachinariable,
+          inverse_of: :attachinariable,
           class_name: '::Attachinary::File',
           dependent: :destroy
       end
