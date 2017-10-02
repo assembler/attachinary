@@ -92,7 +92,7 @@ test:
     default:
       database: dummy_test
       hosts:
-        - <%= ENV.fetch('MONGO_HOST', 'localhost') %>:<%= ENV.fetch('MONGO_PORT', '27017') %>
+        - localhost:27017
       options:
         read: primary
         # In the test environment we lower the retries and retry interval to
