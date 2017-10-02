@@ -27,26 +27,15 @@ load 'rails/tasks/engine.rake'
 
 Bundler::GemHelper.install_tasks
 
-#require 'rake/spectask'
-
-# Spec::Rake::SpecTask.new(:spec) do |t|
-#   t.libs << 'lib'
-#   t.libs << 'spec'
-#   t.pattern = 'spec/**/*_spec.rb'
-#   t.verbose = false
-# end
-
-require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new(:spec)
-
-
-desc 'Run Devise tests for all ORMs.'
-task :spec_all_orms do
-  Dir[File.join(File.dirname(__FILE__), 'spec', 'orm', '*.rb')].each do |file|
-    orm = File.basename(file).split(".").first
-    puts "\n\n-------- ORM: #{orm}\n\n"
-    exit 1 unless system "rake spec ATTACHINARY_ORM=#{orm}"
+# Configure rspec rake task
+begin
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new(:spec) do |t|
+    t.rspec_opts = '--tag ~js'
   end
+rescue LoadError
+  # no rspec available
 end
 
-task :default => :spec_all_orms
+# Configure default task
+task :default => :spec

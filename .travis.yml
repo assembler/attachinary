@@ -1,6 +1,13 @@
 language: ruby
 rvm:
  - 2.3.1
+# For testing mongoid integration
+services:
+  - mongodb
+# Test both integrations
+env:
+  - ATTACHINARY_ORM=active_record
+  - ATTACHINARY_ORM=mongoid
 # Enable headless testing with chrome
 dist: trusty
 addons:
