@@ -13,8 +13,13 @@ gem 'jquery-rails'
 gem 'cloudinary'
 gem 'simple_form'
 
-group :assets do
-  gem 'coffee-rails'
+# Assets gems used in dummy application
+gem 'coffee-rails'
+gem 'sass-rails'
+gem 'bootstrap-sass', '~> 3.3.5'
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-blueimp-file-upload', '7.2.1'
 end
 
 group :mongoid do

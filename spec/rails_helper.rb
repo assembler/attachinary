@@ -9,6 +9,10 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 # Define rails root as const
 ENGINE_RAILS_ROOT = File.join(File.dirname(__FILE__), '../')
+# Define const used in features and require appropriate orm configuration
+SPEC_ROOT = File.realpath(File.join(ENGINE_RAILS_ROOT, 'spec'))
+require "#{SPEC_ROOT}/orm/#{ATTACHINARY_ORM}"
+require 'valid_attribute'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
