@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Note do
+RSpec.describe Note do
   subject { build(:note) }
 
   describe 'validations' do

@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Attachinary::File do
+RSpec.describe Attachinary::File do
   subject { build(:file) }
 
   describe 'validations' do

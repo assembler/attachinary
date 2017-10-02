@@ -1,6 +1,4 @@
-require 'rails_helper'
-
-describe 'Notes' do
+RSpec.describe 'Notes' do
   Capybara.default_wait_time = 15
 
   describe 'Creating new note' do
