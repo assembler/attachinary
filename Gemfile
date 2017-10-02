@@ -1,4 +1,4 @@
-source "http://rubygems.org"
+source 'http://rubygems.org'
 
 # Declare your gem's dependencies in attachinary.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
@@ -16,6 +16,18 @@ end
 
 group :mongoid do
   gem 'mongoid'
+end
+
+group :development, :test do
+  gem 'sqlite3'
+  gem 'rspec-rails'
+  gem 'valid_attribute'
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'factory_girl_rails'
+  gem 'launchy'
+  gem 'database_cleaner'
+  gem 'guard-rspec'
 end
 
 
