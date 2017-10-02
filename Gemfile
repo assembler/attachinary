@@ -5,6 +5,9 @@ source 'http://rubygems.org'
 # development dependencies will be added by default to the :development group.
 gemspec
 
+# For now test on latest rails 4.2.x
+gem 'rails', '~> 4.2.3'
+
 # used by the dummy application
 gem 'jquery-rails'
 gem 'cloudinary'
@@ -20,14 +23,13 @@ end
 
 group :development, :test do
   gem 'sqlite3'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 3.5'
   gem 'valid_attribute'
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'factory_girl_rails'
   gem 'launchy'
   gem 'database_cleaner'
-  gem 'guard-rspec'
 end
 
 
