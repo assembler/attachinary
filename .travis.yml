@@ -1,6 +1,8 @@
 language: ruby
 rvm:
  - 2.3.1
+# Cache bundler dependencies
+cache: bundler
 # For testing mongoid integration
 services:
   - mongodb
