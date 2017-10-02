@@ -22,10 +22,12 @@ group :mongoid do
 end
 
 group :development, :test do
+  gem 'pry'
   gem 'sqlite3'
   gem 'rspec-rails', '~> 3.5'
   gem 'valid_attribute'
   gem 'capybara'
+  gem 'capybara-screenshot'
   gem 'selenium-webdriver'
   gem 'factory_girl_rails'
   gem 'launchy'
