@@ -5,8 +5,11 @@ rvm:
 dist: trusty
 addons:
   chrome: stable
-# Install ChromeDriver (64bits).
+# Headless test setup
 before_install:
+  - # start your web application and listen on `localhost`
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+  # Install ChromeDriver (64bits).
   - wget -N http://chromedriver.storage.googleapis.com/2.32/chromedriver_linux64.zip -P ~/
   - unzip ~/chromedriver_linux64.zip -d ~/
   - rm ~/chromedriver_linux64.zip
