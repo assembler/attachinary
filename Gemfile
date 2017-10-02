@@ -22,9 +22,8 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-blueimp-file-upload', '7.2.1'
 end
 
-group :mongoid do
-  gem 'mongoid'
-end
+# Stick with a working configuration
+gem 'mongoid', '~> 5.0'
 
 group :development, :test do
   gem 'pry'
