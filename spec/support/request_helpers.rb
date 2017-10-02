@@ -14,3 +14,8 @@ module RequestHelpers
   end
 
 end
+
+# Include module in features
+RSpec.configure do |config|
+  config.include RequestHelpers, type: :feature
+end
