@@ -11,3 +11,6 @@ bin/
 
 .rspec
 config/cloudinary.yml
+
+# Should not go into published repository
+Gemfile.lock
