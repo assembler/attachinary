@@ -1,0 +1,18 @@
+language: ruby
+rvm:
+ - 2.3.1
+# Enable headless testing with chrome
+dist: trusty
+addons:
+  chrome: stable
+before_install:
+  - # start your web application and listen on `localhost`
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+
+# Copy sample credentials to expected path
+before_script:
+  - cp spec/support/cloudinary-sample-credentials.yml spec/dummy/config/cloudinary.yml
+  - bundle exec rake db:setup
+# Run RSpec
+script:
+  bundle exec rake
