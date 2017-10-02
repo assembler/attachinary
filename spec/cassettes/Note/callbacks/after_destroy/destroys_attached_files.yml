@@ -1,0 +1,109 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cloudinary.com/v1_1/<CLOUDINARY_CLOUD_NAME>/image/tags
+    body:
+      encoding: UTF-8
+      string: timestamp=1506982870&tag=attachinary_tmp&public_ids[]=id7&command=remove&signature=b7ec00290190989be00e351c224232873ba06d03&api_key=<CLOUDINARY_API_KEY>
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - cld-ruby-1.1.0
+      Content-Length:
+      - '147'
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 02 Oct 2017 22:21:11 GMT
+      Etag:
+      - W/"7bd9202622f9de0e2f09217fcdc4d855"
+      Server:
+      - cloudinary
+      Status:
+      - 200 OK
+      X-Request-Id:
+      - b723a839f0c1f0d9
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Xss-Protection:
+      - 1; mode=block
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAwAAAP//qlYqKE3KyUyOz0wpVrKKjq0FAAAA//8DANqCv0cR
+        AAAA
+    http_version: 
+  recorded_at: Mon, 02 Oct 2017 22:21:11 GMT
+- request:
+    method: post
+    uri: https://api.cloudinary.com/v1_1/<CLOUDINARY_CLOUD_NAME>/image/destroy
+    body:
+      encoding: UTF-8
+      string: timestamp=1506982871&public_id=id7&signature=b43d538e93d5eba1e946af0f0def4e8ebc5251f7&api_key=<CLOUDINARY_API_KEY>
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - cld-ruby-1.1.0
+      Content-Length:
+      - '109'
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 02 Oct 2017 22:21:11 GMT
+      Etag:
+      - W/"33747e3f086d5dd0aef7ac1fde8cf595"
+      Server:
+      - cloudinary
+      Status:
+      - 200 OK
+      X-Request-Id:
+      - 4d4d7b28287ac804
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Length:
+      - '48'
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAA6pWKkotLs0pUbJSyssvUUjLL81LUaoFAAAA//8DAPI2A+8W
+        AAAA
+    http_version: 
+  recorded_at: Mon, 02 Oct 2017 22:21:11 GMT
+recorded_with: VCR 3.0.3

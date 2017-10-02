@@ -1,6 +1,4 @@
 RSpec.describe 'Notes' do
-  Capybara.default_wait_time = 15
-
   describe 'Creating new note' do
 
     shared_examples_for "any form" do
@@ -60,7 +58,7 @@ RSpec.describe 'Notes' do
         end
       end
 
-      it 'saves the record', :js => true do
+      it 'saves the record', :js, :vcr do
         fill_in 'note[body]', with: 'My Note'
         within 'div.photo' do
           attach_file "note[photo]", "#{SPEC_ROOT}/support/A.gif"

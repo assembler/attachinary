@@ -15,13 +15,13 @@ RSpec.describe Note do
         Cloudinary.config.delete_field(:attachinary_keep_remote) if Cloudinary.config.respond_to?(:attachinary_keep_remote)
       end
       
-      it "destroys attached files" do
+      it "destroys attached files", :vcr do
         note = create(:note, photo: photo)
-        expect(Cloudinary::Uploader).to receive(:destroy).with(photo.public_id)
+        expect(Cloudinary::Uploader).to receive(:destroy).with(photo.public_id).and_call_original
         note.destroy
       end
       
-      it "keeps attached files if Cloudinary.config.attachinary_keep_remote == true" do
+      it "keeps attached files if Cloudinary.config.attachinary_keep_remote == true", :vcr do
         Cloudinary.config.attachinary_keep_remote = true
         note = create(:note, photo: photo)
         expect(Cloudinary::Uploader).not_to receive(:destroy).with(photo.public_id)

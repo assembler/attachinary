@@ -17,18 +17,4 @@ RSpec.configure do |config|
   config.append_after(:each) do
     DatabaseCleaner.clean
   end
-
-  config.after(:suite) do
-    print "\n\n Cleaning up uploaded files"
-
-    begin
-      Cloudinary::Api.delete_resources_by_tag('test_env')
-      print ' (done)'
-    rescue Cloudinary::Api::RateLimited => e
-      print " (#{e.message})"
-    end
-
-    print "\n\n"
-  end
-
 end
