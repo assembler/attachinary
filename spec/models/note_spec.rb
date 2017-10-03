@@ -20,6 +20,13 @@ RSpec.describe Note do
         expect(Cloudinary::Uploader).to receive(:destroy).with(photo.public_id).and_call_original
         note.destroy
       end
+
+      it "destroy attached files when association is cleared", :vcr, strategy: :truncation do
+        expect(Cloudinary.config.attachinary_keep_remote).to be_falsey
+        note = create(:note, optional_photo: photo)
+        expect(Cloudinary::Uploader).to receive(:destroy).with(photo.public_id).and_call_original
+        note.update!(optional_photo: nil)
+      end
       
       it "keeps attached files if Cloudinary.config.attachinary_keep_remote == true", :vcr do
         Cloudinary.config.attachinary_keep_remote = true
