@@ -1,5 +1,5 @@
-require 'attachinary/view_helpers'
-require 'attachinary/form_builder'
+require_relative 'view_helpers'
+require_relative 'form_builder'
 
 module Attachinary
   class Engine < ::Rails::Engine

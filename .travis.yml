@@ -1,0 +1,35 @@
+language: ruby
+rvm:
+ - 2.3.3
+# Cache bundler dependencies
+cache: bundler
+# For testing mongoid integration
+services:
+  - mongodb
+# Test both integrations
+env:
+  - ATTACHINARY_ORM=active_record
+  - ATTACHINARY_ORM=mongoid
+# Enable headless testing with chrome
+dist: trusty
+addons:
+  chrome: stable
+# Headless test setup
+before_install:
+  - # start your web application and listen on `localhost`
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+  # Install ChromeDriver (64bits).
+  - wget -N http://chromedriver.storage.googleapis.com/2.32/chromedriver_linux64.zip -P ~/
+  - unzip ~/chromedriver_linux64.zip -d ~/
+  - rm ~/chromedriver_linux64.zip
+  - sudo mv -f ~/chromedriver /usr/local/bin
+  - sudo chmod +x /usr/local/bin/chromedriver
+# Decrypt cloudinary credentials
+before_script:
+  - openssl aes-256-cbc -K $encrypted_b867c800090e_key -iv $encrypted_b867c800090e_iv
+    -in cloudinary.yml.enc -out spec/dummy/config/cloudinary.yml -d
+  - bundle exec rake db:setup
+# Run RSpec
+script: bundle exec rake
+# Cleanup cloudinary
+after_script: bundle exec rake cleanup

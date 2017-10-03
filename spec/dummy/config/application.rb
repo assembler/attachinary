@@ -2,8 +2,9 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
-Bundler.require :default, ATTACHINARY_ORM
-
+# Require the gems listed in Gemfile, including any gems
+# you've limited to :test, :development, or :production.
+Bundler.require(*Rails.groups, ATTACHINARY_ORM)
 begin
   require "#{ATTACHINARY_ORM}/railtie"
 rescue LoadError
@@ -37,35 +38,14 @@ module Dummy
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    # Configure the default encoding used in templates for Ruby 1.9.
-    config.encoding = "utf-8"
+    # Do not swallow errors in after_commit/after_rollback callbacks.
+    config.active_record.raise_in_transactional_callbacks = true
 
-    config.eager_load = true
-
-    # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:password]
-
-    # Enable escaping HTML in JSON.
-    config.active_support.escape_html_entities_in_json = true
-
-    # Use SQL instead of Active Record's schema dumper when creating the database.
-    # This is necessary if your schema can't be completely dumped by the schema dumper,
-    # like if you have constraints or database-specific column types
-    # config.active_record.schema_format = :sql
-    
-    if Rails::VERSION::MAJOR == 3
-      config.active_record.whitelist_attributes = true
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
+    if ATTACHINARY_ORM == 'mongoid'
+      config.generators do |g|
+        g.orm :mongoid
+      end
     end
-
-    # Enable the asset pipeline
-    config.assets.enabled = true
-
-    # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
-
-    config.secret_key_base = 'xxx'
-
-    I18n.enforce_available_locales = false
   end
 end
-
