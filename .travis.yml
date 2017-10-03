@@ -31,3 +31,5 @@ before_script:
   - bundle exec rake db:setup
 # Run RSpec
 script: bundle exec rake
+# Cleanup cloudinary
+after_script: bundle exec rake cleanup
