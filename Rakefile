@@ -28,14 +28,8 @@ load 'rails/tasks/engine.rake'
 Bundler::GemHelper.install_tasks
 
 # Configure rspec rake task
-begin
-  require 'rspec/core/rake_task'
-  RSpec::Core::RakeTask.new(:spec) do |t|
-    t.rspec_opts = '--tag ~js'
-  end
-rescue LoadError
-  # no rspec available
-end
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec)
 
 # Configure default task
-task :default => :spec
+task default: :spec

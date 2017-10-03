@@ -1,6 +1,6 @@
 language: ruby
 rvm:
- - 2.3.1
+ - 2.3.3
 # Cache bundler dependencies
 cache: bundler
 # For testing mongoid integration
@@ -24,10 +24,10 @@ before_install:
   - rm ~/chromedriver_linux64.zip
   - sudo mv -f ~/chromedriver /usr/local/bin
   - sudo chmod +x /usr/local/bin/chromedriver
-# Copy sample credentials to expected path
+# Decrypt cloudinary credentials
 before_script:
-  - cp spec/support/cloudinary-sample-credentials.yml spec/dummy/config/cloudinary.yml
+  - openssl aes-256-cbc -K $encrypted_b867c800090e_key -iv $encrypted_b867c800090e_iv
+    -in cloudinary.yml.enc -out spec/dummy/config/cloudinary.yml -d
   - bundle exec rake db:setup
 # Run RSpec
-script:
-  bundle exec rake
+script: bundle exec rake
