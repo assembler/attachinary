@@ -29,10 +29,14 @@ module Attachinary
       api_secret = options[:cloudinary][:api_secret] || Cloudinary.config.api_secret || raise("Must supply api_secret")
 
       cloudinary_params = Cloudinary::Uploader.build_upload_params(options[:cloudinary])
-      cloudinary_params[:callback] = attachinary.cors_url
+      # If the engine has been mounted it will provide an `attachinary` method
+      # here, otherwise this raises an `undefined local variable or method `attachinary'`
+      # when rendering form file inputs.
+      # Some projects don't have a need for supporting old browsers and won't
+      # have a need to expose this endpoint.
+      cloudinary_params[:callback] = attachinary.cors_url if self.respond_to?(:attachinary)
       cloudinary_params[:signature] = Cloudinary::Utils.api_sign_request(cloudinary_params, api_secret)
       cloudinary_params[:api_key] = api_key
-
 
       options[:html] ||= {}
       options[:html][:class] = [options[:html][:class], 'attachinary-input'].flatten.compact
