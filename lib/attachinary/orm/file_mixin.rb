@@ -33,8 +33,9 @@ module Attachinary
     end
     
   private
+
     def destroy_file
-      Cloudinary::Uploader.destroy(public_id) if public_id && !keep_remote?
+      Cloudinary::Uploader.destroy(public_id) if public_id && !keep_remote? &&  self.class.where(public_id: public_id).count <= 0
     end
 
     def remove_temporary_tag
