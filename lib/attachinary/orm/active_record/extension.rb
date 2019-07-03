@@ -18,7 +18,7 @@ module Attachinary
           order: 'position ASC'
       else
         has_many :"#{relation}",
-          -> { where(scope: options[:scope].to_s).order('position ASC') },
+          -> { where(scope: options[:scope].to_s).order('position ASC NULLS FIRST, created_at ASC, id ASC') },
           as: :attachinariable,
           class_name: '::Attachinary::File',
           dependent: :destroy

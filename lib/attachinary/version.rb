@@ -1,3 +1,3 @@
 module Attachinary
-  VERSION = "1.3.0.6"
+  VERSION = "1.3.0.7"
 end
