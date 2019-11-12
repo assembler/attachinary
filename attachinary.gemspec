@@ -13,6 +13,14 @@ Gem::Specification.new do |s|
   s.summary     = "attachinary-#{s.version}"
   s.description = "Attachments handler for Rails that uses Cloudinary for storage."
 
+  if s.respond_to?(:metadata)
+    s.metadata["allowed_push_host"] = "https://rubygems.pkg.github.com"
+  else
+    raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
+  end
+
+  s.metadata = { "github_repo" => "ssh://github.com/reverbdotcom/attachinary" }
+
   s.files = Dir["{app,config,db,lib,vendor}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
 
