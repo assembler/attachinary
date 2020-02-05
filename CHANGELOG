@@ -1,3 +1,6 @@
+= Version 1.3.2
+  * Compress uploaded images
+
 = Version 1.3.1
   * Don't delete files if there's an existing public ID reference
 

@@ -1,3 +1,8 @@
+#= require canvas-to-blob.min
+#= require load-image.all.min
+#= require jquery.fileupload-process
+#= require jquery.fileupload-image
+
 (($) ->
 
   $.attachinary =
@@ -61,6 +66,9 @@
         headers: {"X-Requested-With": "XMLHttpRequest"}
         dropZone: @config.dropZone || @$input
         sequentialUploads: true
+        disableImageResize: false
+        imageForceResize: true
+        imageQuality: 0.6
 
       # attach the pasteZone option if the user has specified it
       if @options.pasteZone != undefined
