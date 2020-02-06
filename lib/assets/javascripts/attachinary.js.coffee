@@ -60,8 +60,6 @@
     initFileUpload: ->
       @options.field_name = @$input.attr('name')
 
-      console.log("abcd123")
-
       options =
         dataType: 'json'
         paramName: 'file'
