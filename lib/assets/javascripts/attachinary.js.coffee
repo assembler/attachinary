@@ -60,21 +60,27 @@
     initFileUpload: ->
       @options.field_name = @$input.attr('name')
 
+      console.log("abcd123")
+
       options =
         dataType: 'json'
         paramName: 'file'
         headers: {"X-Requested-With": "XMLHttpRequest"}
         dropZone: @config.dropZone || @$input
         sequentialUploads: true
-        disableImageResize: false
-        imageForceResize: true
-        imageQuality: 0.6
 
       # attach the pasteZone option if the user has specified it
       if @options.pasteZone != undefined
         options.pasteZone = @options.pasteZone
       else if @config.pasteZone != undefined
         options.pasteZone = @config.pasteZone
+
+      image_quality = @options.imageQuality || @config.imageQuality
+
+      if image_quality != undefined
+        options.imageQuality = image_quality
+        options.imageForceResize = true
+        options.disableImageResize = false
 
       if @$input.attr('accept')
         options.acceptFileTypes = new RegExp("^#{@$input.attr('accept').split(",").join("|")}$", "i")
