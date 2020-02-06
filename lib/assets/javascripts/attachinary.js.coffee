@@ -1,3 +1,8 @@
+#= require canvas-to-blob.min
+#= require load-image.all.min
+#= require jquery.fileupload-process
+#= require jquery.fileupload-image
+
 (($) ->
 
   $.attachinary =
@@ -67,6 +72,13 @@
         options.pasteZone = @options.pasteZone
       else if @config.pasteZone != undefined
         options.pasteZone = @config.pasteZone
+
+      image_quality = @options.imageQuality || @config.imageQuality
+
+      if image_quality != undefined
+        options.imageQuality = image_quality
+        options.imageForceResize = true
+        options.disableImageResize = false
 
       if @$input.attr('accept')
         options.acceptFileTypes = new RegExp("^#{@$input.attr('accept').split(",").join("|")}$", "i")
