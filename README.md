@@ -113,7 +113,7 @@ Here comes the good part. There is no need to transform images on your server. I
 
 ```erb
 <% if @user.avatar? %>
-	<%= cl_image_tag(@user.avatar.path, { size: '50x50', crop: :thumb, gravity: :face }) %>
+	<%= cl_image_tag(@user.avatar.path, { size: '50x50', crop: :fit, gravity: :face }) %>
 <% end %>
 
 <% @user.photos.each do |photo| %>
@@ -157,20 +157,6 @@ If you don't want fancy JS features, all you have to do is just switch to `:inpu
 <%= f.input :images, as: :file, input_html: { multiple: true } %>
 ```
 
-### Preventing n+1 queries when loading attachinary associations
-
-You can eager load attachinary associations.
-
-For example, I have a `user` model that has `photo` and `avatar` as attachments.
-
-```rb
-# user.rb
-  has_attachment :avatar
-  has_attachments :photos
-
-# users_controller.rb
-  User.includes(:avatar_files, :photo_files).all
-```
 
 ## Conventions
 

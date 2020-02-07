@@ -69,11 +69,11 @@ describe Note do
       it 'accepts IO objects' do
         image = StringIO.new("")
         file = build(:file)
-        expected_id = file.public_id
+
         Cloudinary::Uploader.should_receive(:upload).with(image, resource_type: 'auto').and_return(file.attributes)
 
         subject.photo = image
-        subject.photo.public_id.should == expected_id
+        subject.photo.public_id.should == file.public_id
       end
     end
 
@@ -94,9 +94,9 @@ describe Note do
 
     describe '#photo?' do
       it 'checks whether photo is present' do
-        subject.photo?.should be_truthy
+        subject.photo?.should be_true
         subject.photo = nil
-        subject.photo?.should be_falsey
+        subject.photo?.should be_false
       end
     end
 
@@ -111,7 +111,7 @@ describe Note do
   describe 'image attachments' do
     describe '#images' do
       it 'manages images' do
-        subject.images?.should be_falsey
+        subject.images?.should be_false
 
         image1 = build(:file)
         subject.images << image1
@@ -135,24 +135,21 @@ describe Note do
       it 'accepts IO objects' do
         images = [1,2].map { StringIO.new("") }
         files = build_list(:file, images.length)
-        files_ids = files.map(&:public_id)
 
         files.each.with_index do |file, index|
           Cloudinary::Uploader.should_receive(:upload).with(images[index], resource_type: 'auto').and_return(file.attributes)
         end
 
         subject.images = images
-        subject.images.map(&:public_id).should =~ files_ids
+        subject.images.map(&:public_id).should =~ files.map(&:public_id)
       end
     end
 
     describe '#image_urls=(urls)' do
       let(:urls) { %w[ 1 2 3 ] }
       let(:files) { build_list(:file, urls.length) }
-      let(:files_ids) { files.map(&:public_id)}
 
       before do
-        files_ids
         files.each.with_index do |file, index|
           Cloudinary::Uploader.should_receive(:upload).with(urls[index], resource_type: 'auto').and_return(file.attributes)
         end
@@ -160,7 +157,7 @@ describe Note do
 
       it 'upload photos via urls' do
         subject.image_urls = urls
-        subject.images.map(&:public_id).should =~ files_ids
+        subject.images.map(&:public_id).should =~ files.map(&:public_id)
       end
     end
 
