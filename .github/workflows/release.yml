@@ -1,0 +1,35 @@
+name: Update Gem Version On Release
+on:
+  release:
+    types: [published]
+jobs:
+  publish:
+    env:
+      GEM_NAME: attachinary
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Ruby 2.5
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.5.x
+    - name: Build and test with Rake
+      run: |
+        TAG_NAME=${GITHUB_REF##*/}
+        sed -i'' "s/VERSION = ".*"/VERSION = \"${TAG_NAME:1}\".freeze/" lib/${GEM_NAME}/version.rb
+        gem install bundler -v "=1.17.3"
+        bundle config rubygems.pkg.github.com reverb-deploy-bot:${{ secrets.GITHUB_PACKAGE_PULL_TOKEN }}
+        bundle install
+        git config user.email "actions@github.com"
+        git config user.name "GitHub Actions"
+        git add lib/${GEM_NAME}/version.rb Gemfile.lock
+        git commit -m "Bumping version to $TAG_NAME" --author "GitHub Action <actions@github.com>"
+    - name: Publish gem to Github Packages
+      run: |
+        echo -e "---\n:github: Bearer ${{ secrets.GITHUB_TOKEN }}" > ~/.gem/credentials
+        chmod 0600 ~/.gem/credentials
+        gem push --key github --host https://rubygems.pkg.github.com/reverbdotcom ${GEM_NAME}*.gem
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
