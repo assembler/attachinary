@@ -117,7 +117,7 @@ GEM
       moped (~> 1.4)
       origin (~> 1.0)
       tzinfo (~> 0.3.29)
-    moped (1.5.2)
+    moped (1.5.3)
     multi_json (1.11.2)
     nenv (0.2.0)
     netrc (0.10.3)
