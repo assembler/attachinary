@@ -45,3 +45,6 @@
 
 # ------------------------------------------------------------------------
 *.md                  @crownandcaliber/devops
+.github/*             @crownandcaliber/devops
+Guardfile             @crownandcaliber/devops
+Rakefile              @crownandcaliber/devops
