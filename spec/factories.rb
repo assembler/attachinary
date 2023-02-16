@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :note do
     sequence(:body) { |n| "Note ##{n}"}

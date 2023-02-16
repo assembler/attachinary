@@ -6,16 +6,16 @@ source "http://rubygems.org"
 gemspec
 
 # used by the dummy application
-gem 'jquery-rails'
-gem 'cloudinary'
-gem 'simple_form'
+gem "jquery-rails"
+gem "cloudinary"
+gem "simple_form"
 
 group :assets do
-  gem 'coffee-rails'
+  gem "coffee-rails"
 end
 
 group :mongoid do
-  gem 'mongoid'
+  gem "mongoid"
 end
 
 
@@ -25,4 +25,4 @@ end
 # your gem to rubygems.org.
 
 # To use debugger
-# gem 'debugger'
+# gem "debugger"
